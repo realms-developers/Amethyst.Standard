@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talk", "Talk\Talk.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileProtect", "TileProtect\TileProtect.csproj", "{43D1D12F-5A86-4EDB-8801-4CB39A30203D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essentials", "Essentials\Essentials.csproj", "{48731C12-515F-450F-91B9-67ABA2F3BC2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{43D1D12F-5A86-4EDB-8801-4CB39A30203D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43D1D12F-5A86-4EDB-8801-4CB39A30203D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43D1D12F-5A86-4EDB-8801-4CB39A30203D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48731C12-515F-450F-91B9-67ABA2F3BC2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48731C12-515F-450F-91B9-67ABA2F3BC2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48731C12-515F-450F-91B9-67ABA2F3BC2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48731C12-515F-450F-91B9-67ABA2F3BC2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

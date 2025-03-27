@@ -31,7 +31,7 @@ public static class RegionCommands
             }
             else
             {
-                ctx.Sender.ReplyError("$LOCALIZE region.invalidManualPoint");
+                ctx.Sender.ReplyError("region.invalidManualPoint");
                 return;
             }
         }
