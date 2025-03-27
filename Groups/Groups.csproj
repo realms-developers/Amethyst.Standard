@@ -8,6 +8,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Talk\Talk.csproj" />
     
-    <PackageReference Include="Amethyst.Server" Version="7.12.2.2" />
+    <PackageReference Include="Amethyst.Server" Version="*" />
   </ItemGroup>
 </Project>

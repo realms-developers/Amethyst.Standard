@@ -5,7 +5,7 @@ namespace Amethyst.Essentials.Commands;
 
 public static class CharacterCommands
 {
-    [ServerCommand(CommandType.Shared, "ssc reset", "essentials.desc.reset", null)]
+    [ServerCommand(CommandType.Shared, "ssc reset", "essentials.desc.reset", "essentials.ssc.reset")]
     [CommandsSyntax("<name>")]
     public static void Reset(CommandInvokeContext ctx, string name)
     {
@@ -29,7 +29,7 @@ public static class CharacterCommands
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.characterWasReseted", ctx.Sender.Language));
     }
 
-    [ServerCommand(CommandType.Shared, "ssc savebak", "essentials.desc.backupSave", null)]
+    [ServerCommand(CommandType.Shared, "ssc savebak", "essentials.desc.backupSave", "essentials.ssc.savebak")]
     [CommandsSettings(CommandSettings.IngameOnly)]
     [CommandsSyntax("<name>")]
     public static void SaveBackup(CommandInvokeContext ctx, string name)
@@ -41,7 +41,7 @@ public static class CharacterCommands
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.characterWasSaved", ctx.Sender.Language));
     }
 
-    [ServerCommand(CommandType.Shared, "ssc loadbak", "essentials.desc.backupLoad", null)]
+    [ServerCommand(CommandType.Shared, "ssc loadbak", "essentials.desc.backupLoad", "essentials.ssc.loadbak")]
     [CommandsSettings(CommandSettings.IngameOnly)]
     [CommandsSyntax("<name>")]
     public static void LoadBackup(CommandInvokeContext ctx, string name)
@@ -58,7 +58,7 @@ public static class CharacterCommands
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.characterWasLoaded", ctx.Sender.Language));
     }
 
-    [ServerCommand(CommandType.Shared, "ssc replace", "essentials.desc.replace", null)]
+    [ServerCommand(CommandType.Shared, "ssc replace", "essentials.desc.replace", "essentials.ssc.replace")]
     [CommandsSettings(CommandSettings.IngameOnly)]
     [CommandsSyntax("<name>")]
     public static void Replace(CommandInvokeContext ctx, string name)
@@ -81,7 +81,7 @@ public static class CharacterCommands
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.characterWasReplaced", ctx.Sender.Language));
     }
 
-    [ServerCommand(CommandType.Shared, "ssc clone", "essentials.desc.clone", null)]
+    [ServerCommand(CommandType.Shared, "ssc clone", "essentials.desc.clone", "essentials.ssc.clone")]
     [CommandsSettings(CommandSettings.IngameOnly)]
     [CommandsSyntax("<name>")]
     public static void Clone(CommandInvokeContext ctx, string name)
@@ -104,7 +104,7 @@ public static class CharacterCommands
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.characterWasCloned", ctx.Sender.Language));
     }
 
-    [ServerCommand(CommandType.Shared, "ssc restore", "essentials.desc.restore", null)]
+    [ServerCommand(CommandType.Shared, "ssc restore", "essentials.desc.restore", "essentials.ssc.restore")]
     [CommandsSettings(CommandSettings.IngameOnly)]
     public static void Restore(CommandInvokeContext ctx)
     {

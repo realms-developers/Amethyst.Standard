@@ -2,7 +2,6 @@ using Amethyst.Commands;
 using Amethyst.Core;
 using Amethyst.Extensions.Plugins;
 using Amethyst.Players;
-using Amethyst.Players.Extensions;
 using Amethyst.Players.SSC;
 using Amethyst.Storages.Mongo;
 
