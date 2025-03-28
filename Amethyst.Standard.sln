@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groups", "Groups\Groups.csproj", "{F666B00C-446E-4AC6-A86A-960E2CE55AB3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groups", "Groups\src\Groups.csproj", "{F666B00C-446E-4AC6-A86A-960E2CE55AB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talk", "Talk\Talk.csproj", "{93A775EC-A7E4-4E19-9E42-7FB325FA17A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talk", "Talk\src\Talk.csproj", "{93A775EC-A7E4-4E19-9E42-7FB325FA17A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileProtect", "TileProtect\TileProtect.csproj", "{43D1D12F-5A86-4EDB-8801-4CB39A30203D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileProtect", "TileProtect\src\TileProtect.csproj", "{43D1D12F-5A86-4EDB-8801-4CB39A30203D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essentials", "Essentials\Essentials.csproj", "{48731C12-515F-450F-91B9-67ABA2F3BC2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essentials", "Essentials\src\Essentials.csproj", "{48731C12-515F-450F-91B9-67ABA2F3BC2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

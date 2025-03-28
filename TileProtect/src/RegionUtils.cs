@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Amethyst.TileProtect;
 
 public static class RegionUtils
