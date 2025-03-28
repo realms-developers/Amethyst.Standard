@@ -1,5 +1,4 @@
-﻿using Amethyst.Commands;
-using Amethyst.Core;
+﻿using Amethyst.Core;
 using Amethyst.Extensions.Modules;
 using Amethyst.Network;
 using Amethyst.Network.Managing;
@@ -34,7 +33,7 @@ public static class GroupsModule
     {
         if (!packet.Player.IsCapable)
         {
-            result.Ignore("network.playerIsNotCapable");
+            result.Ignore(Localization.Get("network.playerIsNotCapable", packet.Player.Language));
             return;
         }
 
@@ -48,7 +47,7 @@ public static class GroupsModule
         {
             RenderResult renderResult = ChatRenderer.RenderMessage(packet.Player, text);
             Provider.HandlePlayerMessage(renderResult);
-            result.Ignore("talk.replacedWithCustom");
+            result.Ignore(Localization.Get("talk.replacedWithCustom", packet.Player.Language));
         }
     }
 }
