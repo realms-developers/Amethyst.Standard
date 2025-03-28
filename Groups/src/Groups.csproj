@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Talk\src\Talk.csproj" />
     <ProjectReference Include="..\Talk\Talk.csproj" />
     
     <PackageReference Include="Amethyst.Server" Version="*" />
