@@ -1,7 +1,7 @@
 using Amethyst.Network;
 using Amethyst.Players;
 
-namespace Amethyst.Talk.Rendering;
+namespace Talk.Rendering;
 
 public sealed class RenderOperation
 {

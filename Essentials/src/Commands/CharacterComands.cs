@@ -1,7 +1,9 @@
+using Amethyst;
 using Amethyst.Commands;
+using Amethyst.Commands.Attributes;
 using Amethyst.Players;
 
-namespace Amethyst.Essentials.Commands;
+namespace Essentials.Commands;
 
 public static class CharacterCommands
 {
@@ -16,9 +18,9 @@ public static class CharacterCommands
             return;
         }
 
-        var model = PlayerManager.SSCProvider.GetModel(name);
+        Amethyst.Players.SSC.CharacterModel model = PlayerManager.SSCProvider.GetModel(name);
 
-        foreach (var plr in PlayerManager.Tracker)
+        foreach (NetPlayer plr in PlayerManager.Tracker)
         {
             if (plr.Name == name)
             {
@@ -31,11 +33,10 @@ public static class CharacterCommands
 
     [ServerCommand(CommandType.Shared, "ssc savebak", "essentials.desc.backupSave", "essentials.ssc.savebak")]
     [CommandsSettings(CommandSettings.IngameOnly)]
-    [CommandsSyntax("<name>")]
-    public static void SaveBackup(CommandInvokeContext ctx, string name)
+    public static void SaveBackup(CommandInvokeContext ctx)
     {
-        var self = (ctx.Sender as NetPlayer)!;
-        var character = self.Character!;
+        NetPlayer self = (ctx.Sender as NetPlayer)!;
+        Amethyst.Players.SSC.Interfaces.ICharacterWrapper character = self.Character!;
 
         EssentialsPlugin.CharactersBackup.Save(character.Model);
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.characterWasSaved", ctx.Sender.Language));
@@ -43,12 +44,11 @@ public static class CharacterCommands
 
     [ServerCommand(CommandType.Shared, "ssc loadbak", "essentials.desc.backupLoad", "essentials.ssc.loadbak")]
     [CommandsSettings(CommandSettings.IngameOnly)]
-    [CommandsSyntax("<name>")]
-    public static void LoadBackup(CommandInvokeContext ctx, string name)
+    public static void LoadBackup(CommandInvokeContext ctx)
     {
-        var self = (ctx.Sender as NetPlayer)!;
+        NetPlayer self = (ctx.Sender as NetPlayer)!;
 
-        var backup = EssentialsPlugin.CharactersBackup.Find(self.Name);
+        Amethyst.Players.SSC.CharacterModel? backup = EssentialsPlugin.CharactersBackup.Find(self.Name);
         if (backup == null)
         {
             ctx.Sender.ReplyError(Localization.Get("essentials.text.backupNotFound", ctx.Sender.Language));
@@ -63,14 +63,14 @@ public static class CharacterCommands
     [CommandsSyntax("<name>")]
     public static void Replace(CommandInvokeContext ctx, string name)
     {
-        var self = (ctx.Sender as NetPlayer)!;
-        var model = self.Character!.Model;
+        NetPlayer self = (ctx.Sender as NetPlayer)!;
+        Amethyst.Players.SSC.CharacterModel model = self.Character!.Model;
 
         model.Name = name;
         model.Save();
         model.Name = self.Name;
 
-        foreach (var plr in PlayerManager.Tracker)
+        foreach (NetPlayer plr in PlayerManager.Tracker)
         {
             if (plr.Name == name)
             {
@@ -86,16 +86,16 @@ public static class CharacterCommands
     [CommandsSyntax("<name>")]
     public static void Clone(CommandInvokeContext ctx, string name)
     {
-        var self = (ctx.Sender as NetPlayer)!;
+        NetPlayer self = (ctx.Sender as NetPlayer)!;
 
-        var character = PlayerManager.SSCProvider.GetModel(name);
+        Amethyst.Players.SSC.CharacterModel character = PlayerManager.SSCProvider.GetModel(name);
         if (character == null)
         {
             ctx.Sender.ReplyError(Localization.Get("essentials.text.backupNotFound", ctx.Sender.Language));
             return;
         }
 
-        var backup = self.Character!.Model;
+        Amethyst.Players.SSC.CharacterModel backup = self.Character!.Model;
         backup.Name = "CHARACTER_BACKUP/" + backup.Name;
         EssentialsPlugin.CharactersBackup.Save(backup);
 
@@ -108,9 +108,9 @@ public static class CharacterCommands
     [CommandsSettings(CommandSettings.IngameOnly)]
     public static void Restore(CommandInvokeContext ctx)
     {
-        var self = (ctx.Sender as NetPlayer)!;
+        NetPlayer self = (ctx.Sender as NetPlayer)!;
 
-        var backup = PlayerManager.SSCProvider.GetModel("CHARACTER_BACKUP/" + ctx.Sender.Name);
+        Amethyst.Players.SSC.CharacterModel backup = PlayerManager.SSCProvider.GetModel("CHARACTER_BACKUP/" + ctx.Sender.Name);
         if (backup == null)
         {
             ctx.Sender.ReplyError(Localization.Get("essentials.text.backupNotFound", ctx.Sender.Language));

@@ -1,14 +1,11 @@
 using Amethyst.Players;
 using Amethyst.Players.Extensions;
 
-namespace Amethyst.Groups.Extensions;
+namespace Groups.Extensions;
 
 public sealed class UserExtensionBuilder : IPlayerExtensionBuilder<UserExtension>
 {
-    public UserExtension Build(NetPlayer player)
-    {
-        return new UserExtension(player);
-    }
+    public UserExtension Build(NetPlayer player) => new(player);
 
-    public void Initialize() {}
+    public void Initialize() { }
 }

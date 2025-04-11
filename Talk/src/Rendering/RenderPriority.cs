@@ -1,4 +1,4 @@
-namespace Amethyst.Talk.Rendering;
+namespace Talk.Rendering;
 
 public enum RenderPriority : byte
 {

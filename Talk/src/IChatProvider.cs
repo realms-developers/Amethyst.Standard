@@ -1,7 +1,7 @@
 using Amethyst.Players;
-using Amethyst.Talk.Rendering;
+using Talk.Rendering;
 
-namespace Amethyst.Talk.Chat;
+namespace Talk;
 
 public interface IChatProvider
 {

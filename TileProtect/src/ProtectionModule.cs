@@ -2,10 +2,11 @@
 using Amethyst.Extensions.Modules;
 using Amethyst.Players.Extensions;
 using Amethyst.Storages.Mongo;
-using Amethyst.TileProtect.Extensions;
-using Amethyst.TileProtect.Network;
+using TileProtect.Extensions;
+using TileProtect.Models;
+using TileProtect.Network;
 
-namespace Amethyst.TileProtect;
+namespace TileProtect;
 
 [AmethystModule("Amethyst.TileProtect", null)]
 public static class ProtectionModule
@@ -14,13 +15,19 @@ public static class ProtectionModule
 
     public static IReadOnlyList<RegionModel> CachedRegions => _cachedRegions.AsReadOnly();
 
-    internal static List<RegionModel> _cachedRegions = Regions.FindAll().ToList();
+    internal static List<RegionModel> _cachedRegions = [.. Regions.FindAll()];
 
-    private static bool IsInitialized;
+    private static bool _isInitialized;
+
     [ModuleInitialize]
     public static void Initialize()
     {
-        if (IsInitialized) return; IsInitialized = true;
+        if (_isInitialized)
+        {
+            return;
+        }
+
+        _isInitialized = true;
 
         RegionNetworking.Initialize();
         AmethystSession.PlayerPermissions.Register(new RegionPermissionsWorker());

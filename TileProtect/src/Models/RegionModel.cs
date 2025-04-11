@@ -1,30 +1,12 @@
 using Amethyst.Storages.Mongo;
-using Amethyst.TileProtect.Models;
 using Microsoft.Xna.Framework;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Amethyst.TileProtect;
+namespace TileProtect.Models;
 
 [BsonIgnoreExtraElements]
-public sealed class RegionModel : DataModel
+public sealed class RegionModel(string name) : DataModel(name)
 {
-    public RegionModel(string name) : base(name)
-    {
-        Members = new List<string>();
-
-        SuperProtection = new bool[6];
-        Protection = new bool[6]
-        {
-            true, true, true, true, true, true
-        };
-
-        EnterCommands = new List<RegionCommand>();
-        EnterMessages = new List<string>();
-
-        LeaveCommands = new List<RegionCommand>();
-        LeaveMessages = new List<string>();
-    }
-
     public int X;
     public int Y;
     public int X2;
@@ -35,24 +17,27 @@ public sealed class RegionModel : DataModel
     /// <summary>
     /// Protection from all users (include owner).
     /// </summary>
-    public bool[] SuperProtection;
+    public bool[] SuperProtection = new bool[6];
 
     /// <summary>
     /// Only members can do actions.
     /// </summary>
-    public bool[] Protection;
+    public bool[] Protection =
+        [
+            true, true, true, true, true, true
+        ];
 
-    public List<string> Members;
+    public List<string> Members = [];
 
     public bool NoItems;
     public bool NoEnemies;
     public bool AutoGodMode;
 
-    public List<string> EnterMessages;
-    public List<RegionCommand> EnterCommands;
+    public List<string> EnterMessages = [];
+    public List<RegionCommand> EnterCommands = [];
 
-    public List<string> LeaveMessages;
-    public List<RegionCommand> LeaveCommands;
+    public List<string> LeaveMessages = [];
+    public List<RegionCommand> LeaveCommands = [];
 
     public string? Owner;
 
@@ -71,12 +56,12 @@ public sealed class RegionModel : DataModel
     public override void Save()
     {
         ProtectionModule.Regions.Save(this);
-        ProtectionModule._cachedRegions = ProtectionModule.Regions.FindAll().ToList();
+        ProtectionModule._cachedRegions = [.. ProtectionModule.Regions.FindAll()];
     }
 
     public override void Remove()
     {
         ProtectionModule.Regions.Remove(Name);
-        ProtectionModule._cachedRegions = ProtectionModule.Regions.FindAll().ToList();
+        ProtectionModule._cachedRegions = [.. ProtectionModule.Regions.FindAll()];
     }
 }

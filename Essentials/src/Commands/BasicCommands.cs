@@ -1,16 +1,18 @@
+using Amethyst;
 using Amethyst.Commands;
+using Amethyst.Commands.Attributes;
 using Amethyst.Players;
 using Amethyst.Text;
 
-namespace Amethyst.Essentials.Commands;
+namespace Essentials.Commands;
 
 public static class BasicCommands
 {
     [ServerCommand(CommandType.Shared, "who", "essentials.desc.who", null)]
     [CommandsSyntax("[page]")]
-    public static void WhoCommand(CommandInvokeContext ctx, int pageId = 0)
+    public static void Who(CommandInvokeContext ctx, int page = 0)
     {
-        var page = PagesCollection.CreateFromList(PlayerManager.Tracker.Where(p => p.IsActive).Select(p => p.Name));
-        ctx.Sender.ReplyPage(page, Localization.Get("essentials.header.who", ctx.Sender.Language), null, null, false, pageId);
+        var pages = PagesCollection.CreateFromList(PlayerManager.Tracker.Where(p => p.IsActive).Select(p => p.Name));
+        ctx.Sender.ReplyPage(pages, Localization.Get("essentials.header.who", ctx.Sender.Language), null, null, false, page);
     }
 }

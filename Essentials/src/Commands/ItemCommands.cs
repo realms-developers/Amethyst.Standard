@@ -1,8 +1,10 @@
+using Amethyst;
 using Amethyst.Commands;
 using Amethyst.Commands.Arguments;
+using Amethyst.Commands.Attributes;
 using Amethyst.Players;
 
-namespace Amethyst.Essentials.Commands;
+namespace Essentials.Commands;
 
 public static class ItemCommands
 {
@@ -32,19 +34,21 @@ public static class ItemCommands
     [CommandsSyntax("[player]")]
     public static void Fill(CommandInvokeContext ctx, PlayerReference? plrRef = null)
     {
-        var plr = plrRef?.Player ?? (ctx.Sender is NetPlayer ? ctx.Sender as NetPlayer : null);
+        NetPlayer? plr = plrRef?.Player ?? (ctx.Sender is NetPlayer ? ctx.Sender as NetPlayer : null);
 
         if (plr == null)
         {
             ctx.Sender.ReplyError(Localization.Get("essentials.text.noTargetPlayer", ctx.Sender.Language));
             return;
         }
-        
+
         for (int i = 0; i < 59; i++)
         {
-            var item = plr.TPlayer.inventory[i];
+            Terraria.Item item = plr.TPlayer.inventory[i];
             if (item.netID > 0 && item.stack < item.maxStack)
+            {
                 plr.Utils.GiveItem(item.netID, item.maxStack - item.stack, item.prefix);
+            }
         }
 
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.filled", ctx.Sender.Language));

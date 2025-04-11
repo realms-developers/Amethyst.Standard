@@ -1,25 +1,22 @@
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Amethyst.Groups.Models;
+namespace Groups.Models;
 
-public class TempGroup
+public class TempGroup(string group, DateTime time)
 {
-    public TempGroup(string group, DateTime time)
-    {
-        Group = group;
-        Time = time;
-    }
-
     [BsonIgnore]
     public GroupModel? GroupModel;
-    public string Group;
-    public DateTime Time;
+    public string Group = group;
+    public DateTime Time = time;
 
     public GroupModel? GetGroup()
     {
-        if (Time < DateTime.UtcNow) return null;
+        if (Time < DateTime.UtcNow)
+        {
+            return null;
+        }
 
-        var group = GroupsModule._cachedModels.Find(p => p.Name == Group && p.BlockTempGroup == false);
+        GroupModel? group = GroupsModule._cachedModels.Find(p => p.Name == Group && p.BlockTempGroup == false);
 
         return group;
     }

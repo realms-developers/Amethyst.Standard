@@ -1,18 +1,18 @@
-using Amethyst.Groups.Models;
 using Amethyst.Permissions;
 using Amethyst.Players;
 using Amethyst.Players.Extensions;
+using Groups.Models;
 
-namespace Amethyst.Groups.Extensions;
+namespace Groups.Extensions;
 
 public sealed class UserExtension : IPlayerExtension
 {
     internal UserExtension(NetPlayer player)
     {
         Player = player;
-        PersonalPermissions = new List<string>();
+        PersonalPermissions = [];
 
-        _sharedPermissions = new List<string>();
+        _sharedPermissions = [];
         SharedPermissions = _sharedPermissions.AsReadOnly();
     }
 
@@ -27,21 +27,29 @@ public sealed class UserExtension : IPlayerExtension
 
     public PermissionAccess HasPermission(string permission)
     {
-        if (_sharedPermissions.Any(p => p.ToLowerInvariant() == "operator" || p == "*"))
+        if (_sharedPermissions.Any(p => p.Equals("operator", StringComparison.OrdinalIgnoreCase) || p == "*"))
+        {
             return PermissionAccess.HasPermission;
+        }
 
         if (_sharedPermissions.Contains("!" + permission))
+        {
             return PermissionAccess.Blocked;
+        }
 
         string[] array = permission.Split('.');
         PermissionAccess partedAccess = HasPartedPermission(array);
-        if (partedAccess == PermissionAccess.Blocked || partedAccess == PermissionAccess.HasPermission) 
+        if (partedAccess == PermissionAccess.Blocked || partedAccess == PermissionAccess.HasPermission)
+        {
             return partedAccess;
+        }
 
-        foreach (var perm in _sharedPermissions)
+        foreach (string perm in _sharedPermissions)
         {
             if (perm == permission)
+            {
                 return PermissionAccess.HasPermission;
+            }
         }
 
         return PermissionAccess.None;
@@ -49,35 +57,44 @@ public sealed class UserExtension : IPlayerExtension
 
     private PermissionAccess HasPartedPermission(string[] array)
     {
-        foreach (var part in array)
+        foreach (string part in array)
         {
             if (_sharedPermissions.Contains("!" + part + ".*"))
+            {
                 return PermissionAccess.Blocked;
+            }
 
             if (_sharedPermissions.Contains(part + ".*"))
+            {
                 return PermissionAccess.HasPermission;
+            }
         }
 
         return PermissionAccess.None;
     }
-    
+
     public GroupModel? GetGroup()
     {
         if (TempGroup != null && TempGroup.Time > DateTime.UtcNow)
+        {
             return TempGroup.GroupModel;
+        }
 
         return Group;
     }
 
-    public void Load() {}
+    public void Load() { }
 
-    public void Unload() {}
+    public void Unload() { }
 
     public void Refresh()
     {
-        if (Player.Name == "") return;
+        if (Player.Name == "")
+        {
+            return;
+        }
 
-        var usr = GroupsModule.Users.Find(Player.Name);
+        GroupUserModel? usr = GroupsModule.Users.Find(Player.Name);
         if (usr == null)
         {
             usr = new GroupUserModel(Player.Name)
@@ -87,9 +104,9 @@ public sealed class UserExtension : IPlayerExtension
             usr.Save();
         }
 
-        var group = GroupsModule.CachedGroups.FirstOrDefault(p => p.Name == usr.Group) ?? null;
+        GroupModel? group = GroupsModule.CachedGroups.FirstOrDefault(p => p.Name == usr.Group) ?? null;
 
-        PersonalPermissions = usr.PersonalPermissions ?? new List<string>(0);
+        PersonalPermissions = usr.PersonalPermissions ?? [];
         _sharedPermissions = PersonalPermissions;
 
         Group = group;
@@ -109,7 +126,7 @@ public sealed class UserExtension : IPlayerExtension
             _sharedPermissions.AddRange(Group.Permissions);
             Group.InsertParentPermissions(ref _sharedPermissions);
         }
-        
+
         SharedPermissions = _sharedPermissions.AsReadOnly();
     }
 }

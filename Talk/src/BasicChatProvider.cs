@@ -1,17 +1,13 @@
 using Amethyst.Players;
-using Amethyst.Talk.Chat;
-using Amethyst.Talk.Rendering;
 using Microsoft.Xna.Framework;
+using Talk.Rendering;
 using Terraria;
 
-namespace Amethyst.Talk;
+namespace Talk;
 
 public sealed class BasicChatProvider : IChatProvider
 {
-    public void HandlePlayerMessage(RenderResult renderResult)
-    {
-        PlayerUtilities.BroadcastText(renderResult.Message, renderResult.Color.ToXNA());
-    }
+    public void HandlePlayerMessage(RenderResult renderResult) => PlayerUtilities.BroadcastText(renderResult.Message, renderResult.Color.ToXNA());
 
     public void HandleJoin(NetPlayer player)
     {

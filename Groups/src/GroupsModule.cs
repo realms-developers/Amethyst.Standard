@@ -1,16 +1,16 @@
 ﻿using Amethyst.Core;
 using Amethyst.Extensions.Modules;
-using Amethyst.Groups.Extensions;
-using Amethyst.Groups.Models;
 using Amethyst.Network;
 using Amethyst.Network.Managing;
 using Amethyst.Network.Packets;
 using Amethyst.Players;
 using Amethyst.Players.Extensions;
 using Amethyst.Storages.Mongo;
-using Amethyst.Talk.Rendering;
+using Groups.Extensions;
+using Groups.Models;
+using Talk.Rendering;
 
-namespace Amethyst.Groups;
+namespace Groups;
 
 [AmethystModule("Amethyst.Groups", null)]
 public static class GroupsModule
@@ -20,13 +20,18 @@ public static class GroupsModule
 
     public static IReadOnlyList<GroupModel> CachedGroups => _cachedModels.AsReadOnly();
 
-    internal static List<GroupModel> _cachedModels = Groups.FindAll().ToList();
+    internal static List<GroupModel> _cachedModels = [.. Groups.FindAll()];
 
-    private static bool IsInitialized;
+    private static bool _isInitialized;
     [ModuleInitialize]
     public static void Initialize()
     {
-        if (IsInitialized) return; IsInitialized = true;
+        if (_isInitialized)
+        {
+            return;
+        }
+
+        _isInitialized = true;
 
         PlayerExtensions.RegisterBuilder(new UserExtensionBuilder());
         AmethystSession.PlayerPermissions.Register(new PermissionWorker());
@@ -38,25 +43,32 @@ public static class GroupsModule
 
     private static void RenderGroups(RenderOperation operation)
     {
-        var ext = operation.Player.GetExtension<UserExtension>();
-        
-        if (ext?.Group == null) return;
+        UserExtension? ext = operation.Player.GetExtension<UserExtension>();
 
-        var group = ext.Group;
+        if (ext?.Group == null)
+        {
+            return;
+        }
+
+        GroupModel group = ext.Group;
         operation.Color = group.Color ?? operation.Color;
 
         if (group.Prefix != null)
+        {
             operation.Prefix.Add(new RenderSnippet(RenderPriority.PostHigh, group.Prefix));
+        }
 
         if (group.Suffix != null)
+        {
             operation.Suffix.Add(new RenderSnippet(RenderPriority.PostHigh, group.Suffix));
+        }
     }
 
     private static void OnRequestWorldInfo(in IncomingPacket packet, PacketHandleResult result)
     {
         try
         {
-            var ext = packet.Player.GetExtension<UserExtension>();
+            UserExtension? ext = packet.Player.GetExtension<UserExtension>();
             ext!.Refresh();
         }
         catch (Exception ex)
@@ -67,20 +79,26 @@ public static class GroupsModule
 
     public static void Reload()
     {
-        _cachedModels = Groups.FindAll().ToList();
+        _cachedModels = [.. Groups.FindAll()];
         RefreshUsers();
     }
 
     public static void RefreshUser(string name)
     {
-        foreach (var plr in PlayerManager.Tracker)
+        foreach (NetPlayer plr in PlayerManager.Tracker)
+        {
             if (plr.Name == name)
+            {
                 plr.GetExtension<UserExtension>()!.Refresh();
+            }
+        }
     }
 
     public static void RefreshUsers()
     {
-        foreach (var plr in PlayerManager.Tracker)
+        foreach (NetPlayer plr in PlayerManager.Tracker)
+        {
             plr.GetExtension<UserExtension>()!.Refresh();
+        }
     }
 }

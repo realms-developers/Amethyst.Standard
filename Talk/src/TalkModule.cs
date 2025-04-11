@@ -1,27 +1,33 @@
-﻿using Amethyst.Core;
+﻿using Amethyst;
+using Amethyst.Core;
 using Amethyst.Extensions.Modules;
 using Amethyst.Network;
 using Amethyst.Network.Managing;
 using Amethyst.Network.Packets;
-using Amethyst.Talk.Chat;
-using Amethyst.Talk.Filtering;
-using Amethyst.Talk.Rendering;
+using Talk.Filtering;
+using Talk.Rendering;
 
-namespace Amethyst.Talk;
+namespace Talk;
 
 [AmethystModule("Amethyst.Talk", null)]
 public static class GroupsModule
 {
-    public static IChatProvider? CustomProvider;
-    private static IChatProvider _BasicProvider = new BasicChatProvider();
+    public static IChatProvider? CustomProvider { get; set; }
+    private static readonly IChatProvider _basicProvider = new BasicChatProvider();
 
-    public static IChatProvider Provider => CustomProvider ?? _BasicProvider;
+    public static IChatProvider Provider => CustomProvider ?? _basicProvider;
 
-    private static bool IsInitialized;
+    private static bool _isInitialized;
+
     [ModuleInitialize]
     public static void Initialize()
     {
-        if (IsInitialized) return; IsInitialized = true;
+        if (_isInitialized)
+        {
+            return;
+        }
+
+        _isInitialized = true;
 
         AmethystHooks.Players.OnPlayerGreet += static (plr) => Provider.HandleJoin(plr);
         AmethystHooks.Players.OnPlayerDisconnected += static (plr) => Provider.HandleLeave(plr);
@@ -37,11 +43,14 @@ public static class GroupsModule
             return;
         }
 
-        var reader = packet.GetReader();
+        BinaryReader reader = packet.GetReader();
 
         string command = reader.ReadString();
         string text = reader.ReadString();
-        if (command != "Say") return;
+        if (command != "Say")
+        {
+            return;
+        }
 
         if (!ChatFilter.FilterText(packet.Player, text))
         {

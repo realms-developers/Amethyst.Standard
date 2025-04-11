@@ -1,20 +1,13 @@
-using Microsoft.Xna.Framework;
-using MongoDB.Bson.Serialization.Attributes;
-using Amethyst.Permissions;
-using Amethyst.Storages.Mongo;
 using Amethyst.Network;
+using Amethyst.Storages.Mongo;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace Amethyst.Groups.Models;
+namespace Groups.Models;
 
 [BsonIgnoreExtraElements]
-public sealed class GroupModel : DataModel
+public sealed class GroupModel(string name) : DataModel(name)
 {
-    public GroupModel(string name) : base(name)
-    {
-        Permissions = new List<string>();
-    }
-
-    public List<string> Permissions;
+    public List<string> Permissions = [];
     public string? Prefix;
     public string? Suffix;
     public NetColor? Color;
@@ -23,12 +16,14 @@ public sealed class GroupModel : DataModel
     public bool BlockTempGroup;
 
     private GroupModel? _parent;
-    private DateTime _lastUpdateParent;
 
     internal void InsertParentPermissions(ref List<string> perms)
     {
-        var parent = GetParent();
-        if (parent == null) return;
+        GroupModel? parent = GetParent();
+        if (parent == null)
+        {
+            return;
+        }
 
         perms.InsertRange(0, parent.Permissions);
         parent.InsertParentPermissions(ref perms);
@@ -36,8 +31,10 @@ public sealed class GroupModel : DataModel
 
     public GroupModel? GetParent()
     {
-        if (Parent == null) 
+        if (Parent == null)
+        {
             return null;
+        }
 
         _parent = GroupsModule._cachedModels.Find(p => p.Name == Parent);
         return _parent;

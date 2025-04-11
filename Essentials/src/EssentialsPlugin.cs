@@ -5,37 +5,40 @@ using Amethyst.Players;
 using Amethyst.Players.SSC;
 using Amethyst.Storages.Mongo;
 
-namespace Amethyst.Essentials;
+namespace Essentials;
 
 public sealed class EssentialsPlugin : PluginInstance
 {
-    public static MongoModels<CharacterModel> CharactersBackup = PlayerManager.Characters.Database.Get<CharacterModel>("CharactersBackupModelCollection");
+    public static MongoModels<CharacterModel> CharactersBackup { get; set; } = PlayerManager.Characters.Database.Get<CharacterModel>("CharactersBackupModelCollection");
 
     public override string Name => "Essentials";
 
-    public override Version Version => new Version(1, 0);
+    public override Version Version => new(1, 0);
 
-    internal static string[] SSCCommands = new string[]
-    {
+    internal static string[] SSCCommands =
+    [
         "ssc reset",
         "ssc savebak",
         "ssc loadbak",
         "ssc clone",
         "ssc replace",
-    };
+    ];
 
     protected override void Load()
     {
         TryDisableCommands(PlayerManager.IsSSCEnabled == false, SSCCommands);
     }
 
-    private void TryDisableCommands(bool state, string[] commands)
+    private static void TryDisableCommands(bool state, string[] commands)
     {
-        if (!state) return;
-
-        foreach (var cmd in commands)
+        if (!state)
         {
-            var instanceCmd = CommandsManager.FindCommand(cmd);
+            return;
+        }
+
+        foreach (string cmd in commands)
+        {
+            CommandRunner? instanceCmd = CommandsManager.FindCommand(cmd);
             if (instanceCmd == null)
             {
                 AmethystLog.Main.Error("Amethyst.Essentials", $"Cannot find command {cmd}");

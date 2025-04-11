@@ -1,19 +1,14 @@
 using Amethyst.Storages.Mongo;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Amethyst.Groups.Models;
+namespace Groups.Models;
 
 [BsonIgnoreExtraElements]
-public sealed class GroupUserModel : DataModel
+public sealed class GroupUserModel(string name) : DataModel(name)
 {
-    public GroupUserModel(string name) : base(name)
-    {
-        PersonalPermissions = new List<string>();
-    }
-
     public string? Group;
     public TempGroup? TempGroup;
-    public List<string> PersonalPermissions;
+    public List<string> PersonalPermissions = [];
 
     public override void Save()
     {

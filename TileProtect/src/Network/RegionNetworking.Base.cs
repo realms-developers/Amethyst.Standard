@@ -1,12 +1,13 @@
+using Amethyst;
 using Amethyst.Network.Managing;
 using Amethyst.Network.Packets;
 using Amethyst.Players;
-using Amethyst.TileProtect.Extensions;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using TileProtect.Extensions;
 
-namespace Amethyst.TileProtect.Network;
+namespace TileProtect.Network;
 
 public static partial class RegionNetworking
 {
@@ -108,7 +109,7 @@ public static partial class RegionNetworking
             return;
         }
 
-        var ext = packet.Player.GetExtension<RegionPlayerExtension>();
+        RegionPlayerExtension? ext = packet.Player.GetExtension<RegionPlayerExtension>();
         ext!.UpdateRegions();
     }
 
@@ -120,17 +121,26 @@ public static partial class RegionNetworking
             return;
         }
 
-        var ext = packet.Player.GetExtension<RegionPlayerExtension>();
-        if (ext!.pointToDo == 0) return;
+        RegionPlayerExtension? ext = packet.Player.GetExtension<RegionPlayerExtension>();
+        if (ext!.pointToDo == 0)
+        {
+            return;
+        }
 
-        var reader = packet.GetReader();
+        System.IO.BinaryReader reader = packet.GetReader();
         reader.BaseStream.Position += 1;
 
         int x = reader.ReadInt16();
         int y = reader.ReadInt16();
 
-        if (ext.pointToDo == 1) ext.point1 = new Point(x, y);
-        else ext.point2 = new Point(x, y);
+        if (ext.pointToDo == 1)
+        {
+            ext.point1 = new Point(x, y);
+        }
+        else
+        {
+            ext.point2 = new Point(x, y);
+        }
 
         ext.pointToDo = 0;
 
@@ -149,11 +159,11 @@ public static partial class RegionNetworking
             return;
         }
 
-        var reader = packet.GetReader();
+        System.IO.BinaryReader reader = packet.GetReader();
         reader.ReadByte();
         int index = reader.ReadInt32();
 
-        if (TileEntity.ByID.TryGetValue(index, out var entity))
+        if (TileEntity.ByID.TryGetValue(index, out TileEntity? entity))
         {
             if (!packet.Player.HasTEPermission(entity.Position.X, entity.Position.Y))
             {
@@ -171,7 +181,7 @@ public static partial class RegionNetworking
             return;
         }
 
-        var reader = packet.GetReader();
+        System.IO.BinaryReader reader = packet.GetReader();
         int num67 = reader.ReadInt32();
 
         bool create = reader.ReadBoolean();
@@ -190,7 +200,7 @@ public static partial class RegionNetworking
         }
         else
         {
-            if (TileEntity.ByID.TryGetValue(num67, out var entity))
+            if (TileEntity.ByID.TryGetValue(num67, out TileEntity? entity))
             {
                 if (!packet.Player.HasTEPermission(entity.Position.X, entity.Position.Y))
                 {
@@ -209,18 +219,21 @@ public static partial class RegionNetworking
             return;
         }
 
-        var reader = packet.GetReader();
+        System.IO.BinaryReader reader = packet.GetReader();
 
         int index = reader.ReadInt16();
         int x = reader.ReadInt16();
         int y = reader.ReadInt16();
         string text = reader.ReadString();
         int owner = reader.ReadByte();
-        BitsByte bitsByte = reader.ReadByte();
+        _ = reader.ReadByte();
 
-        if (index < 0 || index >= 1000) return;
+        if (index < 0 || index >= 1000)
+        {
+            return;
+        }
 
-        var sign = Main.sign[index];
+        Sign? sign = Main.sign[index];
 
         if (sign != null && sign.x > 0 && sign.y > 0 && (sign.x != x || sign.y != y))
         {
@@ -228,14 +241,14 @@ public static partial class RegionNetworking
             return;
         }
 
-        if (!packet.Player.HasSignEditPermission(x, y) || (sign != null && !packet.Player.HasSignEditPermission(sign.x, sign.y)))
+        if (!packet.Player.HasSignEditPermission(x, y) || sign != null && !packet.Player.HasSignEditPermission(sign.x, sign.y))
         {
             result.Ignore("Player does not have permission for interacting with sign");
             NetMessage.TrySendData(47, packet.Sender, -1, Terraria.Localization.NetworkText.Empty, index, owner);
             return;
         }
 
-        var oldText = sign?.text ?? "";
+        _ = sign?.text ?? "";
 
         if (text.Length > 500)
         {
@@ -252,16 +265,22 @@ public static partial class RegionNetworking
             return;
         }
 
-        var reader = packet.GetReader();
+        System.IO.BinaryReader reader = packet.GetReader();
         int chestIndex = reader.ReadInt16();
-        int x = reader.ReadInt16();
-        int y = reader.ReadInt16();
+        _ = reader.ReadInt16();
+        _ = reader.ReadInt16();
         int editFlags = reader.ReadByte();
 
-        if (chestIndex < 0 || chestIndex >= 8000) return;
+        if (chestIndex < 0 || chestIndex >= 8000)
+        {
+            return;
+        }
 
-        var chest = Main.chest[chestIndex];
-        if (chest == null) return;
+        Chest chest = Main.chest[chestIndex];
+        if (chest == null)
+        {
+            return;
+        }
 
         if (editFlags == 1 && !packet.Player.HasChestEditPermission(chest.x, chest.y))
         {
@@ -283,18 +302,30 @@ public static partial class RegionNetworking
             return;
         }
 
-        var reader = packet.GetReader();
+        System.IO.BinaryReader reader = packet.GetReader();
         int chestIndex = reader.ReadInt16();
         int slot = reader.ReadByte();
 
-        if (chestIndex < 0 || chestIndex >= 8000) return;
+        if (chestIndex < 0 || chestIndex >= 8000)
+        {
+            return;
+        }
 
-        var chest = Main.chest[chestIndex];
-        if (chest == null) return;
+        Chest chest = Main.chest[chestIndex];
+        if (chest == null)
+        {
+            return;
+        }
 
-        if (packet.Player.TPlayer.chest != chestIndex) return;
+        if (packet.Player.TPlayer.chest != chestIndex)
+        {
+            return;
+        }
 
-        if (slot >= chest.item.Length) return;
+        if (slot >= chest.item.Length)
+        {
+            return;
+        }
 
         if (!packet.Player.HasChestEditPermission(chest.x, chest.y))
         {
@@ -319,7 +350,7 @@ public static partial class RegionNetworking
             return;
         }
 
-        var reader = packet.GetReader();
+        System.IO.BinaryReader reader = packet.GetReader();
         reader.BaseStream.Position += offset;
 
         int x = reader.ReadInt16();
@@ -332,7 +363,7 @@ public static partial class RegionNetworking
         {
             result.Ignore("Player does not have permission for interacting [Basic]");
 
-            var ext = packet.Player.GetExtension<RegionPlayerExtension>()!;
+            RegionPlayerExtension ext = packet.Player.GetExtension<RegionPlayerExtension>()!;
             if (notify && ext._notifyDelay == null || ext._notifyDelay < DateTime.UtcNow)
             {
                 ext._notifyDelay = DateTime.UtcNow.AddSeconds(2);

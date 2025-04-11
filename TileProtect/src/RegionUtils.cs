@@ -1,14 +1,18 @@
-namespace Amethyst.TileProtect;
+using TileProtect.Models;
+
+namespace TileProtect;
 
 public static class RegionUtils
 {
     public static IEnumerable<RegionModel> FindRegions(int x, int y)
     {
-        var regions = ProtectionModule._cachedRegions;
-        foreach (var region in regions)
+        List<RegionModel> regions = ProtectionModule._cachedRegions;
+        foreach (RegionModel region in regions)
         {
             if (region.GetRectangle().Contains(x, y))
+            {
                 yield return region;
+            }
         }
     }
 }

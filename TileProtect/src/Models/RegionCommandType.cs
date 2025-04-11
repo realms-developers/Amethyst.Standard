@@ -1,4 +1,4 @@
-namespace Amethyst.TileProtect.Models;
+namespace TileProtect.Models;
 
 public enum RegionCommandType
 {
