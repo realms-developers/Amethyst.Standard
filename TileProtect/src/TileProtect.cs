@@ -8,8 +8,8 @@ using TileProtect.Network;
 
 namespace TileProtect;
 
-[AmethystModule("Amethyst.TileProtect", null)]
-public static class ProtectionModule
+[AmethystModule("TileProtect", null)]
+public static class TileProtect
 {
     public static MongoModels<RegionModel> Regions { get; } = MongoDatabase.Main.Get<RegionModel>();
 

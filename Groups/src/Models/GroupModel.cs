@@ -36,19 +36,19 @@ public sealed class GroupModel(string name) : DataModel(name)
             return null;
         }
 
-        _parent = GroupsModule._cachedModels.Find(p => p.Name == Parent);
+        _parent = Groups._cachedModels.Find(p => p.Name == Parent);
         return _parent;
     }
 
     public override void Save()
     {
-        GroupsModule.Groups.Save(this);
-        GroupsModule.Reload();
+        Groups.GroupModels.Save(this);
+        Groups.Reload();
     }
 
     public override void Remove()
     {
-        GroupsModule.Groups.Remove(Name);
-        GroupsModule.Reload();
+        Groups.GroupModels.Remove(Name);
+        Groups.Reload();
     }
 }

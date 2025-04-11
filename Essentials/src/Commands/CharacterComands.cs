@@ -38,7 +38,7 @@ public static class CharacterCommands
         NetPlayer self = (ctx.Sender as NetPlayer)!;
         Amethyst.Players.SSC.Interfaces.ICharacterWrapper character = self.Character!;
 
-        EssentialsPlugin.CharactersBackup.Save(character.Model);
+        Essentials.CharactersBackup.Save(character.Model);
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.characterWasSaved", ctx.Sender.Language));
     }
 
@@ -48,7 +48,7 @@ public static class CharacterCommands
     {
         NetPlayer self = (ctx.Sender as NetPlayer)!;
 
-        Amethyst.Players.SSC.CharacterModel? backup = EssentialsPlugin.CharactersBackup.Find(self.Name);
+        Amethyst.Players.SSC.CharacterModel? backup = Essentials.CharactersBackup.Find(self.Name);
         if (backup == null)
         {
             ctx.Sender.ReplyError(Localization.Get("essentials.text.backupNotFound", ctx.Sender.Language));
@@ -97,7 +97,7 @@ public static class CharacterCommands
 
         Amethyst.Players.SSC.CharacterModel backup = self.Character!.Model;
         backup.Name = "CHARACTER_BACKUP/" + backup.Name;
-        EssentialsPlugin.CharactersBackup.Save(backup);
+        Essentials.CharactersBackup.Save(backup);
 
         self.Character!.LoadCharacter(character, true);
 

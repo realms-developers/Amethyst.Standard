@@ -16,7 +16,7 @@ public class TempGroup(string group, DateTime time)
             return null;
         }
 
-        GroupModel? group = GroupsModule._cachedModels.Find(p => p.Name == Group && p.BlockTempGroup == false);
+        GroupModel? group = Groups._cachedModels.Find(p => p.Name == Group && p.BlockTempGroup == false);
 
         return group;
     }

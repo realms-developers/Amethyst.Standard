@@ -12,15 +12,15 @@ using Talk.Rendering;
 
 namespace Groups;
 
-[AmethystModule("Amethyst.Groups", null)]
-public static class GroupsModule
+[AmethystModule("Groups", null)]
+public static class Groups
 {
-    public static MongoModels<GroupModel> Groups { get; } = MongoDatabase.Main.Get<GroupModel>();
+    public static MongoModels<GroupModel> GroupModels { get; } = MongoDatabase.Main.Get<GroupModel>();
     public static MongoModels<GroupUserModel> Users { get; } = MongoDatabase.Main.Get<GroupUserModel>();
 
     public static IReadOnlyList<GroupModel> CachedGroups => _cachedModels.AsReadOnly();
 
-    internal static List<GroupModel> _cachedModels = [.. Groups.FindAll()];
+    internal static List<GroupModel> _cachedModels = [.. GroupModels.FindAll()];
 
     private static bool _isInitialized;
     [ModuleInitialize]
@@ -79,7 +79,7 @@ public static class GroupsModule
 
     public static void Reload()
     {
-        _cachedModels = [.. Groups.FindAll()];
+        _cachedModels = [.. GroupModels.FindAll()];
         RefreshUsers();
     }
 

@@ -35,8 +35,8 @@ public static class GroupsCommands
     public static void GroupReset(CommandInvokeContext ctx, string names)
     {
         string[] splitted = names?.Split() ?? [];
-        GroupsModule.Groups.Remove(p => splitted.Contains(p.Name) == false);
-        GroupsModule.Reload();
+        Groups.GroupModels.Remove(p => splitted.Contains(p.Name) == false);
+        Groups.Reload();
 
         ctx.Sender.ReplySuccess(Localization.Get("groups.resetGroupResult", ctx.Sender.Language));
     }
@@ -70,8 +70,8 @@ public static class GroupsCommands
     public static void GroupPop(CommandInvokeContext ctx, string names)
     {
         string[] splitted = names?.Split() ?? [];
-        GroupsModule.Groups.Remove(p => splitted.Contains(p.Name));
-        GroupsModule.Reload();
+        Groups.GroupModels.Remove(p => splitted.Contains(p.Name));
+        Groups.Reload();
 
         ctx.Sender.ReplySuccess(Localization.Get("groups.popGroupResult", ctx.Sender.Language));
     }
@@ -80,7 +80,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "<permission1,permission2 ...>")]
     public static void GroupAddPerm(CommandInvokeContext ctx, string name, string permissions)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -105,7 +105,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "<permission1,permission2 ...>")]
     public static void GroupRemovePerm(CommandInvokeContext ctx, string name, string permissions)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -129,7 +129,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "<true/false>")]
     public static void GroupSetDefault(CommandInvokeContext ctx, string name, bool value)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -147,7 +147,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "<true/false>")]
     public static void GroupBlockTemp(CommandInvokeContext ctx, string name, bool value)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -164,7 +164,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "[parent]")]
     public static void GroupParent(CommandInvokeContext ctx, string name, string? parent = null)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -181,7 +181,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "<R>", "<G>", "<B>")]
     public static void GroupRGB(CommandInvokeContext ctx, string name, byte r, byte g, byte b)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -198,7 +198,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "[prefix]")]
     public static void GroupPrefix(CommandInvokeContext ctx, string name, string? prefix = null)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -215,7 +215,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "[prefix]")]
     public static void GroupSuffix(CommandInvokeContext ctx, string name, string? suffix = null)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -232,14 +232,14 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "[page]")]
     public static void GroupUsersList(CommandInvokeContext ctx, string name, int page = 0)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
             return;
         }
 
-        List<string> list = PagesCollection.PageifyItems(GroupsModule.Users.FindAll(p => p.Group == name).Select(p => p.Name), 80);
+        List<string> list = PagesCollection.PageifyItems(Groups.Users.FindAll(p => p.Group == name).Select(p => p.Name), 80);
         var pages = PagesCollection.SplitByPages(list, 10);
 
         ctx.Sender.ReplyPage(pages,
@@ -251,7 +251,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "[page]")]
     public static void GroupPermList(CommandInvokeContext ctx, string name, int page = 0)
     {
-        GroupModel? model = GroupsModule.Groups.Find(name);
+        GroupModel? model = Groups.GroupModels.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("groups.groupNotFound", ctx.Sender.Language), name);
@@ -270,7 +270,7 @@ public static class GroupsCommands
     [CommandsSyntax("<name>", "[page]")]
     public static void GroupCommandList(CommandInvokeContext ctx, string name, int page = 0)
     {
-        List<string> list = PagesCollection.PageifyItems(GroupsModule.Groups.FindAll().Select(p => p.Name), 80);
+        List<string> list = PagesCollection.PageifyItems(Groups.GroupModels.FindAll().Select(p => p.Name), 80);
         var pages = PagesCollection.SplitByPages(list, 10);
 
         ctx.Sender.ReplyPage(pages,

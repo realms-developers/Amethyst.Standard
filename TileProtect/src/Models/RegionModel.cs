@@ -55,13 +55,13 @@ public sealed class RegionModel(string name) : DataModel(name)
 
     public override void Save()
     {
-        ProtectionModule.Regions.Save(this);
-        ProtectionModule._cachedRegions = [.. ProtectionModule.Regions.FindAll()];
+        global::TileProtect.TileProtect.Regions.Save(this);
+        global::TileProtect.TileProtect._cachedRegions = [.. global::TileProtect.TileProtect.Regions.FindAll()];
     }
 
     public override void Remove()
     {
-        ProtectionModule.Regions.Remove(Name);
-        ProtectionModule._cachedRegions = [.. ProtectionModule.Regions.FindAll()];
+        global::TileProtect.TileProtect.Regions.Remove(Name);
+        global::TileProtect.TileProtect._cachedRegions = [.. global::TileProtect.TileProtect.Regions.FindAll()];
     }
 }

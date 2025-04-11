@@ -9,8 +9,8 @@ using Talk.Rendering;
 
 namespace Talk;
 
-[AmethystModule("Amethyst.Talk", null)]
-public static class GroupsModule
+[AmethystModule("Talk", null)]
+public static class Talk
 {
     public static IChatProvider? CustomProvider { get; set; }
     private static readonly IChatProvider _basicProvider = new BasicChatProvider();

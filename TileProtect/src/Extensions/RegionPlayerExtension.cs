@@ -42,7 +42,7 @@ public sealed class RegionPlayerExtension : IPlayerExtension
         int y = (int)(Player.TPlayer.position.Y / 16);
         var point = new Point(x, y);
 
-        List<RegionModel> cachedRegions = ProtectionModule._cachedRegions;
+        List<RegionModel> cachedRegions = TileProtect._cachedRegions;
         List<RegionModel> regions = cachedRegions.FindAll(p => p.GetRectangle().Contains(point));
 
         foreach (RegionModel rg in oldRegionsEntered)

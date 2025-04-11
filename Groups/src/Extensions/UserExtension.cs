@@ -94,17 +94,17 @@ public sealed class UserExtension : IPlayerExtension
             return;
         }
 
-        GroupUserModel? usr = GroupsModule.Users.Find(Player.Name);
+        GroupUserModel? usr = Groups.Users.Find(Player.Name);
         if (usr == null)
         {
             usr = new GroupUserModel(Player.Name)
             {
-                Group = GroupsModule.CachedGroups.FirstOrDefault(p => p.IsDefault)?.Name
+                Group = Groups.CachedGroups.FirstOrDefault(p => p.IsDefault)?.Name
             };
             usr.Save();
         }
 
-        GroupModel? group = GroupsModule.CachedGroups.FirstOrDefault(p => p.Name == usr.Group) ?? null;
+        GroupModel? group = Groups.CachedGroups.FirstOrDefault(p => p.Name == usr.Group) ?? null;
 
         PersonalPermissions = usr.PersonalPermissions ?? [];
         _sharedPermissions = PersonalPermissions;
@@ -113,7 +113,7 @@ public sealed class UserExtension : IPlayerExtension
         TempGroup = usr.TempGroup;
         if (TempGroup != null)
         {
-            TempGroup.GroupModel = GroupsModule.CachedGroups.FirstOrDefault(p => p.Name == TempGroup.Group) ?? null;
+            TempGroup.GroupModel = Groups.CachedGroups.FirstOrDefault(p => p.Name == TempGroup.Group) ?? null;
 
             if (TempGroup.GroupModel != null)
             {

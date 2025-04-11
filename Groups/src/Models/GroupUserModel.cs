@@ -12,13 +12,13 @@ public sealed class GroupUserModel(string name) : DataModel(name)
 
     public override void Save()
     {
-        GroupsModule.Users.Save(this);
-        GroupsModule.RefreshUser(Name);
+        Groups.Users.Save(this);
+        Groups.RefreshUser(Name);
     }
 
     public override void Remove()
     {
-        GroupsModule.Users.Remove(Name);
-        GroupsModule.RefreshUser(Name);
+        Groups.Users.Remove(Name);
+        Groups.RefreshUser(Name);
     }
 }

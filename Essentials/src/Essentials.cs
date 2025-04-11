@@ -7,7 +7,7 @@ using Amethyst.Storages.Mongo;
 
 namespace Essentials;
 
-public sealed class EssentialsPlugin : PluginInstance
+public sealed class Essentials : PluginInstance
 {
     public static MongoModels<CharacterModel> CharactersBackup { get; set; } = PlayerManager.Characters.Database.Get<CharacterModel>("CharactersBackupModelCollection");
 

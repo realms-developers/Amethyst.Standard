@@ -105,7 +105,7 @@ public static class RegionCommands
     [CommandsSyntax("[page]")]
     public static void RegionList(CommandInvokeContext ctx, int page = 0)
     {
-        PagesCollection pages = PagesCollection.CreateFromList(PagesCollection.PageifyItems(ProtectionModule.Regions.FindAll().Select(p => p.Name)));
+        PagesCollection pages = PagesCollection.CreateFromList(PagesCollection.PageifyItems(TileProtect.Regions.FindAll().Select(p => p.Name)));
         ctx.Sender.ReplyPage(pages,
             string.Format(Localization.Get("region.listHeader", ctx.Sender.Language), page, pages.Count()),
             null, null, false, page);
@@ -115,7 +115,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "[page]")]
     public static void RegionListMembers(CommandInvokeContext ctx, string name, int page = 0)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -132,9 +132,9 @@ public static class RegionCommands
     [CommandsSyntax("<name>")]
     public static void RegionRemove(CommandInvokeContext ctx, string name)
     {
-        if (ProtectionModule.Regions.Remove(name))
+        if (TileProtect.Regions.Remove(name))
         {
-            ProtectionModule._cachedRegions = [.. ProtectionModule.Regions.FindAll()];
+            TileProtect._cachedRegions = [.. TileProtect.Regions.FindAll()];
             ctx.Sender.ReplySuccess(Localization.Get("region.removed", ctx.Sender.Language));
         }
         else
@@ -147,7 +147,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<offset>")]
     public static void RegionMoveX(CommandInvokeContext ctx, string name, int offset)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -164,7 +164,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<offset>")]
     public static void RegionMoveY(CommandInvokeContext ctx, string name, int offset)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -181,7 +181,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<offset>")]
     public static void RegionMoveX2(CommandInvokeContext ctx, string name, int offset)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -198,7 +198,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<offset>")]
     public static void RegionMoveY2(CommandInvokeContext ctx, string name, int offset)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -215,7 +215,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<offset>")]
     public static void RegionMoveZ(CommandInvokeContext ctx, string name, int z)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -232,7 +232,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<value>")]
     public static void RegionSetX(CommandInvokeContext ctx, string name, int value)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -249,7 +249,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<value>")]
     public static void RegionSetY(CommandInvokeContext ctx, string name, int value)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -266,7 +266,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<value>")]
     public static void RegionSetX2(CommandInvokeContext ctx, string name, int value)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -283,7 +283,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<value>")]
     public static void RegionSetY2(CommandInvokeContext ctx, string name, int value)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -300,7 +300,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<value>")]
     public static void RegionSetZ(CommandInvokeContext ctx, string name, int z)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -317,7 +317,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<username>")]
     public static void RegionAddMember(CommandInvokeContext ctx, string name, string member)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -334,7 +334,7 @@ public static class RegionCommands
     [CommandsSyntax("<name or *>", "<username>")]
     public static void RegionRemoveMember(CommandInvokeContext ctx, string name, string member)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -360,7 +360,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<username>")]
     public static void RegionSetOwner(CommandInvokeContext ctx, string name, string owner)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -381,7 +381,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<tiles | (edit/open)(signs/chests) | tileEntities>", "<true | false>")]
     public static void RegionProtect(CommandInvokeContext ctx, string name, string flag, bool state)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -404,7 +404,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<tiles | (edit/open)(signs/chests) | tileEntities>", "<true | false>")]
     public static void RegionSuperProtect(CommandInvokeContext ctx, string name, string flag, bool state)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -431,7 +431,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "[page]")]
     public static void RegionEnterMessageList(CommandInvokeContext ctx, string name, int page = 0)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -455,7 +455,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<text>", "[index]")]
     public static void RegionEnterInsertMessage(CommandInvokeContext ctx, string name, string text, int index = -1)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -480,7 +480,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "[index (-1 for all)]")]
     public static void RegionEnterRemoveMessage(CommandInvokeContext ctx, string name, int index = -2)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -510,7 +510,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "[page]")]
     public static void RegionEnterCommandList(CommandInvokeContext ctx, string name, int page = 0)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -533,7 +533,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<command>", "<console | self>", "[permission (or -)]", "[index]")]
     public static void RegionEnterInsertCommand(CommandInvokeContext ctx, string name, string command, string sender, string permission = "-", int index = -1)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -566,7 +566,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "[index (-1 for all)]")]
     public static void RegionEnterRemoveCommand(CommandInvokeContext ctx, string name, int index = -2)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -600,7 +600,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "[page]")]
     public static void RegionLeaveMessageList(CommandInvokeContext ctx, string name, int page = 0)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -624,7 +624,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<text>", "[index]")]
     public static void RegionLeaveInsertMessage(CommandInvokeContext ctx, string name, string text, int index = -1)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -649,7 +649,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "[index (-1 for all)]")]
     public static void RegionLeaveRemoveMessage(CommandInvokeContext ctx, string name, int index = -2)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -679,7 +679,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<command>", "<console | self>", "[permission (or -)]", "[index]")]
     public static void RegionLeaveCommandList(CommandInvokeContext ctx, string name, string _, string __, string ___ = "-", int ____ = -1)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -701,7 +701,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<command>", "<console | self>", "[permission (or -)]", "[index]")]
     public static void RegionLeaveInsertCommand(CommandInvokeContext ctx, string name, string command, string sender, string permission = "-", int index = -1)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -734,7 +734,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "[index (-1 for all)]")]
     public static void RegionLeaveRemoveCommand(CommandInvokeContext ctx, string name, int index = -2)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -768,7 +768,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<true | false>")]
     public static void RegionAutoGodMode(CommandInvokeContext ctx, string name, bool state)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -785,7 +785,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<true | false>")]
     public static void RegionNoItems(CommandInvokeContext ctx, string name, bool state)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));
@@ -802,7 +802,7 @@ public static class RegionCommands
     [CommandsSyntax("<name>", "<true | false>")]
     public static void RegionNoEnemies(CommandInvokeContext ctx, string name, bool state)
     {
-        RegionModel? model = ProtectionModule.Regions.Find(name);
+        RegionModel? model = TileProtect.Regions.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError(Localization.Get("region.notFound", ctx.Sender.Language));

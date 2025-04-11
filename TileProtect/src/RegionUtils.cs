@@ -6,7 +6,7 @@ public static class RegionUtils
 {
     public static IEnumerable<RegionModel> FindRegions(int x, int y)
     {
-        List<RegionModel> regions = ProtectionModule._cachedRegions;
+        List<RegionModel> regions = TileProtect._cachedRegions;
         foreach (RegionModel region in regions)
         {
             if (region.GetRectangle().Contains(x, y))

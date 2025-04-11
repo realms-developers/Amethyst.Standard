@@ -11,7 +11,7 @@ public static class UserCommands
     [CommandsSyntax("[page]")]
     public static void UserPermissionedList(CommandInvokeContext ctx, int page = 0)
     {
-        List<string> list = PagesCollection.PageifyItems(GroupsModule.Users.FindAll(p => p.PersonalPermissions.Any()).Select(p => $"{p.Name} ({p.PersonalPermissions.Count})"), 80);
+        List<string> list = PagesCollection.PageifyItems(Groups.Users.FindAll(p => p.PersonalPermissions.Any()).Select(p => $"{p.Name} ({p.PersonalPermissions.Count})"), 80);
         var pages = PagesCollection.SplitByPages(list, 10);
 
         ctx.Sender.ReplyPage(pages, "$LOCALIZE users.permed", null, null, false, page);
@@ -21,7 +21,7 @@ public static class UserCommands
     [CommandsSyntax("<name>", "[page]")]
     public static void UserPermissionList(CommandInvokeContext ctx, string name, int page = 0)
     {
-        Models.GroupUserModel? model = GroupsModule.Users.Find(name);
+        Models.GroupUserModel? model = Groups.Users.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError("$LOCALIZE users.userNotFound", name);
@@ -38,7 +38,7 @@ public static class UserCommands
     [CommandsSyntax("<name>", "<permission>")]
     public static void UserAddPermission(CommandInvokeContext ctx, string name, string perm)
     {
-        Models.GroupUserModel? model = GroupsModule.Users.Find(name);
+        Models.GroupUserModel? model = Groups.Users.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError("$LOCALIZE users.userNotFound", name);
@@ -56,7 +56,7 @@ public static class UserCommands
     [CommandsSyntax("<name>", "<permission or *>")]
     public static void UserRemovePermission(CommandInvokeContext ctx, string name, string perm)
     {
-        Models.GroupUserModel? model = GroupsModule.Users.Find(name);
+        Models.GroupUserModel? model = Groups.Users.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError("$LOCALIZE users.userNotFound", name);
@@ -81,14 +81,14 @@ public static class UserCommands
     [CommandsSyntax("<name>", "<group>", "[time d/h/m/s]")]
     public static void UserSet(CommandInvokeContext ctx, string name, string groupName, string? time = null)
     {
-        Models.GroupUserModel? model = GroupsModule.Users.Find(name);
+        Models.GroupUserModel? model = Groups.Users.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError("$LOCALIZE users.userNotFound", name);
             return;
         }
 
-        Models.GroupModel? groupModel = GroupsModule.Groups.Find(groupName);
+        Models.GroupModel? groupModel = Groups.GroupModels.Find(groupName);
         if (groupModel == null)
         {
             ctx.Sender.ReplyError("$LOCALIZE groups.groupNotFound", groupName);
@@ -114,7 +114,7 @@ public static class UserCommands
     [CommandsSyntax("<name>", "<direct, temp, all>")]
     public static void UserUnset(CommandInvokeContext ctx, string name, string arg)
     {
-        Models.GroupUserModel? model = GroupsModule.Users.Find(name);
+        Models.GroupUserModel? model = Groups.Users.Find(name);
         if (model == null)
         {
             ctx.Sender.ReplyError("$LOCALIZE users.userNotFound", name);
