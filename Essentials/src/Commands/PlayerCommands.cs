@@ -54,4 +54,34 @@ public static class PlayerCommands
 
         ctx.Sender.ReplySuccess("essentials.text.buff", id);
     }
+
+    [ServerCommand(CommandType.Shared, "spawn", "essentials.desc.spawn", "essentials.spawn")]
+    [CommandsSettings(CommandSettings.IngameOnly)]
+    public static void Spawn(CommandInvokeContext ctx)
+    {
+        NetPlayer from = ctx.Sender as NetPlayer ?? throw new InvalidCastException();
+
+        float x = from.TPlayer.SpawnX == -1 ? Terraria.Main.spawnTileX : from.TPlayer.SpawnX;
+        float y = from.TPlayer.SpawnY == -1 ? Terraria.Main.spawnTileY : from.TPlayer.SpawnY;
+
+        from.Utils.Teleport(x * 16, y * 16 - 48);
+
+        from.ReplySuccess("essentials.text.spawn");
+    }
+
+    [ServerCommand(CommandType.Shared, "pos", "essentials.desc.pos", null)]
+    [CommandsSyntax("[player]")]
+    public static void Position(CommandInvokeContext ctx, PlayerReference? toRef = null)
+    {
+        NetPlayer to = toRef == null ? ctx.Sender as NetPlayer ?? throw new InvalidCastException() : toRef.Player;
+
+        if (to.Name != ctx.Sender.Name && !ctx.Sender.HasPermission("essentials.pos"))
+        {
+            ctx.Sender.ReplyError("essentials.text.pos.insufficient");
+
+            return;
+        }
+
+        ctx.Sender.ReplySuccess("essentials.text.pos", to.Utils.PosX, to.Utils.PosY);
+    }
 }

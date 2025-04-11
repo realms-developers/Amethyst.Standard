@@ -23,7 +23,16 @@
     "essentials.desc.broadcast": "Broadcasts a message to all players.",
     "essentials.text.noTargetPlayer": "No target player found.",
     "essentials.text.filled": "Inventory filled.",
+    "essentials.desc.slap": "Hurts a player.",
     "essentials.text.slap": "{0} has been slapped for {1} damage.",
+    "essentials.desc.kill": "Kills a player.",
     "essentials.text.kill": "{0} killed.",
-    "essentials.text.buff": "Buff {0} given successfully."
+    "essentials.desc.buff": "Grants you a buff.",
+    "essentials.desc.gbuff": "Grants a player a buff.",
+    "essentials.text.buff": "Buff {0} given successfully.",
+    "essentials.desc.spawn": "Teleports you to spawn",
+    "essentials.text.spawn": "Teleported to spawn successfully.",
+    "essentials.desc.pos": "Shows yours or a player's position",
+    "essentials.text.pos": "X: {0}, Y: {1}",
+    "essentials.text.pos.insufficient": "Insufficient permissions!"
 }

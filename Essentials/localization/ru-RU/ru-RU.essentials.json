@@ -23,7 +23,16 @@
     "essentials.desc.broadcast": "Транслирует сообщение всем игрокам.",
     "essentials.text.noTargetPlayer": "Целевой игрок не найден.",
     "essentials.text.filled": "Инвентарь заполнен.",
-    "essentials.text.slap": "{0} получил пощечину за {1} урона.",
-    "essentials.text.kill": "{0} убито.",
-    "essentials.text.buff": "Эффект {0} получен успешно."
+    "essentials.desc.slap": "Наносит игроку урон.",
+    "essentials.text.slap": "{0} получил пощёчину и потерял {1} здоровья.",
+    "essentials.desc.kill": "Убивает игрока.",
+    "essentials.text.kill": "{0} был убит.", 
+    "essentials.desc.buff": "Даёт вам усиление.",
+    "essentials.desc.gbuff": "Даёт игроку усиление.",
+    "essentials.text.buff": "Усиление {0} успешно применено.",
+    "essentials.desc.spawn": "Телепортирует вас на точку спавна.",
+    "essentials.text.spawn": "Успешно телепортирован на спавн.",
+    "essentials.desc.pos": "Показывает вашу или чужую позицию.",
+    "essentials.text.pos": "X: {0}, Y: {1}",
+    "essentials.text.pos.insufficient": "Недостаточно прав!"
 }
