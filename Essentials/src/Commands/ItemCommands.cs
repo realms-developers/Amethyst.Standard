@@ -29,12 +29,11 @@ public static class ItemCommands
         ctx.Sender.ReplySuccess(Localization.Get("essentials.text.itemCreated", ctx.Sender.Language));
     }
 
-    // fills all items in inventory to max stack
     [ServerCommand(CommandType.Shared, "fill", "essentials.desc.fill", "essentials.items.fill")]
     [CommandsSyntax("[player]")]
     public static void Fill(CommandInvokeContext ctx, PlayerReference? plrRef = null)
     {
-        NetPlayer? plr = plrRef?.Player ?? (ctx.Sender is NetPlayer ? ctx.Sender as NetPlayer : null);
+        NetPlayer? plr = plrRef?.Player ?? (ctx.Sender as NetPlayer);
 
         if (plr == null)
         {
