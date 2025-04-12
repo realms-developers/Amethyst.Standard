@@ -1,0 +1,31 @@
+{
+  "teleportation.notfound": "Unable to find an available request.",
+  "teleportation.tprequest.unavailable": "You cannot send a teleport request at this time.",
+  
+  "teleportation.timeout.from": "Your teleport request has timed out.",
+  "teleportation.timeout.to": "{0}'s teleport request has timed out.",
+  
+  "teleportation.tp.success.to": "{0} has teleported to you.",
+  "teleportation.tp.success.from": "You have teleported to {0}.",
+  "teleportation.tp.desc": "Teleports you to another player.",
+  
+  "teleportation.tphere.success.to": "You've been teleported to {0}.",
+  "teleportation.tphere.success.from": "{0} has been teleported to you.",
+  "teleportation.tphere.desc": "Teleports another player to you.",
+    
+  "teleportation.tppos.success": "You've been teleported to X: {0}, Y: {1}.",
+  "teleportation.tppos.desc": "Teleports you to a specified position.",
+  
+  "teleportation.tpaccept.success.to": "You have accepted the teleport request from {0}.",
+  "teleportation.tpaccept.success.from": "{0} has accepted your teleport request.",
+  "teleportation.tpaccept.desc": "Accepts a pending teleport request.",
+  
+  "teleportation.tpdeny.success.to": "You have denied the teleport request from {0}.",
+  "teleportation.tpdeny.success.from": "{0} has denied your teleport request.",
+  "teleportation.tpdeny.desc": "Denies a pending teleport request.",
+  
+  "teleportation.tprequest.same": "You cannot send a teleport request to yourself.",
+  "teleportation.tprequest.success.from": "Teleport request sent to {0}.",
+  "teleportation.tprequest.success.to": "{0} has sent you a teleport request. Use /tpaccept or /tpdeny to respond.",
+  "teleportation.tprequest.desc": "Sends a teleport request to another player."
+}

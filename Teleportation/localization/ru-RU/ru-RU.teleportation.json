@@ -1,0 +1,31 @@
+{
+  "teleportation.notfound": "Не удалось найти доступный запрос.",
+  "teleportation.tprequest.unavailable": "В настоящее время вы не можете отправить запрос на телепортацию.",
+  
+  "teleportation.timeout.from": "Ваш запрос на телепортацию истёк.",
+  "teleportation.timeout.to": "Запрос на телепортацию от {0} истёк.",
+    
+  "teleportation.tp.success.to": "{0} телепортировался к вам.",
+  "teleportation.tp.success.from": "Вы телепортировались в {0}.",
+  "teleportation.tp.desc": "Телепортирует вас к другому игроку.",
+    
+  "teleportation.tphere.success.to": "Вас телепортировали в {0}.",
+  "teleportation.tphere.success.from": "{0} был телепортирован к вам.",
+  "teleportation.tphere.desc": "Телепортирует к вам другого игрока.",
+      
+  "teleportation.tppos.success": "Вы телепортировались в точку X: {0}, Y: {1}.",
+  "teleportation.tppos.desc": "Телепортирует вас в указанное место.",
+  
+  "teleportation.tpaccept.success.to": "Вы приняли запрос на телепортацию от {0}.",
+  "teleportation.tpaccept.success.from": "{0} принял(а) ваш запрос на телепортацию.",
+  "teleportation.tpaccept.desc": "Принимает ожидающий запрос на телепортацию.",
+  
+  "teleportation.tpdeny.success.to": "Вы отклонили запрос на телепортацию от {0}.",
+  "teleportation.tpdeny.success.from": "{0} отклонил(а) ваш запрос на телепортацию.",
+  "teleportation.tpdeny.desc": "Отклоняет ожидающий запрос на телепортацию.",
+
+  "teleportation.tprequest.same": "Вы не можете отправить запрос на телепортацию самому себе.",
+  "teleportation.tprequest.success.from": "Запрос на телепортацию отправлен {0}.",
+  "teleportation.tprequest.success.to": "{0} отправил(а) вам запрос на телепортацию. Используйте /tpaccept или /tpdeny для ответа.",
+  "teleportation.tprequest.desc": "Отправляет запрос на телепортацию другому игроку."
+}
