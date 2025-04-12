@@ -33,6 +33,5 @@
     "essentials.desc.spawn": "Teleports you to spawn",
     "essentials.text.spawn": "Teleported to spawn successfully.",
     "essentials.desc.pos": "Shows yours or a player's position",
-    "essentials.text.pos": "X: {0}, Y: {1}",
-    "essentials.text.pos.insufficient": "Insufficient permissions!"
+    "essentials.text.pos": "X: {0}, Y: {1}"
 }

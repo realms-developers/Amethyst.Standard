@@ -77,7 +77,7 @@ public static class PlayerCommands
 
         if (to.Name != ctx.Sender.Name && !ctx.Sender.HasPermission("essentials.pos"))
         {
-            ctx.Sender.ReplyError("essentials.text.pos.insufficient");
+            ctx.Sender.ReplyError("commands.noPermission");
 
             return;
         }
