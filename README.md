@@ -6,3 +6,4 @@ Includes:
 - **Talk**
 - **TileProtect**
 - **Teleportation**
+- **WorldBans**
