@@ -5,7 +5,9 @@ using Amethyst.Network.Managing;
 using Amethyst.Network.Packets;
 using Amethyst.Players;
 using Amethyst.Storages.SQL;
+using Amethyst.Text;
 using Microsoft.Xna.Framework;
+using Terraria;
 using WorldBans.Storages;
 
 namespace WorldBans;
@@ -80,6 +82,8 @@ public sealed class WorldBans : PluginInstance
 
         result.Ignore("worldbans.banned");
 
+        DisableUsage(target);
+
         using PacketWriter writer = new();
 
         byte[] packetBytes = writer
@@ -138,5 +142,23 @@ public sealed class WorldBans : PluginInstance
             .BuildPacket();
 
         target.Socket.SendPacket(packetBytes);
+    }
+
+    private static void Disable(NetPlayer player, string time = "2s")
+    {
+        int seconds = TextUtility.ParseToSeconds(time);
+
+        player.Utils.AddBuff(Terraria.ID.BuffID.Webbed, TimeSpan.FromSeconds(seconds));
+    }
+
+    private static void DisableUsage(NetPlayer player, string time = "2s")
+    {
+        int[] immunities = [Terraria.ID.ItemID.Nazar, Terraria.ID.ItemID.CountercurseMantra, Terraria.ID.ItemID.AnkhCharm, Terraria.ID.ItemID.AnkhShield];
+        Item[] armor = player.TPlayer.armor;
+        bool immune = armor.Any(a => immunities.Any(i => a.netID == i));
+
+        int seconds = TextUtility.ParseToSeconds(time);
+
+        player.Utils.AddBuff(immune ? Terraria.ID.BuffID.Webbed : Terraria.ID.BuffID.Cursed, TimeSpan.FromSeconds(seconds) / (immune ? 1 : 2));
     }
 }
