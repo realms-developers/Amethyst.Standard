@@ -1,0 +1,11 @@
+{
+  "worldbans.projban.list.desc": "List all banned projectiles",
+  "worldbans.projban.list.empty": "There are no banned projectiles.",
+  "worldbans.projban.list.header": "Banned Projectiles:",
+  
+  "worldbans.projban.add.desc": "Ban a projectile by ID",
+  "worldbans.projban.add.success": "Projectile with ID {0} has been banned.",
+  
+  "worldbans.projban.rm.desc": "Remove a projectile ban by ID",
+  "worldbans.projban.rm.success": "Projectile with ID {0} has been unbanned."
+}

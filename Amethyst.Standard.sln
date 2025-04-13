@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essentials", "Essentials\sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teleportation", "Teleportation\src\Teleportation.csproj", "{5EAF7CBD-042F-483D-B1F8-AB8C82D513CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldBans", "WorldBans\src\WorldBans.csproj", "{B952A113-CC8C-4F35-9B24-130B672073F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,12 +85,24 @@ Global
 		{5EAF7CBD-042F-483D-B1F8-AB8C82D513CF}.Release|x64.Build.0 = Release|Any CPU
 		{5EAF7CBD-042F-483D-B1F8-AB8C82D513CF}.Release|x86.ActiveCfg = Release|Any CPU
 		{5EAF7CBD-042F-483D-B1F8-AB8C82D513CF}.Release|x86.Build.0 = Release|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Debug|x64.Build.0 = Debug|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Debug|x86.Build.0 = Debug|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Release|x64.ActiveCfg = Release|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Release|x64.Build.0 = Release|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Release|x86.ActiveCfg = Release|Any CPU
+		{B952A113-CC8C-4F35-9B24-130B672073F5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D6F395EB-6B51-043C-1F23-03711773B3D3} = {A00ACD5B-342D-4940-6131-B0BF72FF10B7}
-		{5EAF7CBD-042F-483D-B1F8-AB8C82D513CF} = {D6F395EB-6B51-043C-1F23-03711773B3D3}
+		{46F40521-266E-433E-1F2E-D64628F7F4D7} = {9D7FE6D2-F45D-D558-E997-AF2923B6E2A0}
+		{B952A113-CC8C-4F35-9B24-130B672073F5} = {46F40521-266E-433E-1F2E-D64628F7F4D7}
 	EndGlobalSection
 EndGlobal

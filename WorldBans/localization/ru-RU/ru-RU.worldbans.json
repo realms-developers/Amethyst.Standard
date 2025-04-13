@@ -1,0 +1,11 @@
+{
+  "worldbans.projban.list.desc": "Список всех запрещённых снарядов",
+  "worldbans.projban.list.empty": "Нет запрещённых снарядов.",
+  "worldbans.projban.list.header": "Запрещённые снаряды",
+  
+  "worldbans.projban.add.desc": "Запретить снаряд по ID",
+  "worldbans.projban.add.success": "Снаряд с ID {0} был запрещён.",
+  
+  "worldbans.projban.rm.desc": "Снять запрет со снаряда по ID",
+  "worldbans.projban.rm.success": "Снаряд с ID {0} был разблокирован."
+}
