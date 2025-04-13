@@ -7,9 +7,9 @@ namespace WorldBans.Commands;
 
 public static partial class Commands
 {
-    private const string _permission = "worldbans.projban";
+    private const string _projPermission = "worldbans.projban";
 
-    [ServerCommand(CommandType.Shared, "projban list", "worldbans.projban.list.desc", _permission)]
+    [ServerCommand(CommandType.Shared, "projban list", "worldbans.projban.list.desc", _projPermission)]
     [CommandsSyntax("[page]")]
     public static void ListProjectileBan(CommandInvokeContext ctx, int page = 0)
     {
@@ -27,7 +27,7 @@ public static partial class Commands
         ctx.Sender.ReplyPage(pages, "worldbans.projban.list.header", null, null, false, page);
     }
 
-    [ServerCommand(CommandType.Shared, "projban add", "worldbans.projban.add.desc", _permission)]
+    [ServerCommand(CommandType.Shared, "projban add", "worldbans.projban.add.desc", _projPermission)]
     [CommandsSyntax("<proj_id>")]
     public static void AddProjectileBan(CommandInvokeContext ctx, ushort id)
     {
@@ -41,7 +41,7 @@ public static partial class Commands
         ctx.Sender.ReplySuccess("worldbans.projban.add.success", id);
     }
 
-    [ServerCommand(CommandType.Shared, "projban rm", "worldbans.projban.rm.desc", _permission)]
+    [ServerCommand(CommandType.Shared, "projban rm", "worldbans.projban.rm.desc", _projPermission)]
     [CommandsSyntax("<proj_id>")]
     public static void RemoveProjectileBan(CommandInvokeContext ctx, ushort id)
     {

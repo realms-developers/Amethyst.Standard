@@ -7,5 +7,15 @@
   "worldbans.projban.add.success": "Снаряд с ID {0} был запрещён.",
   
   "worldbans.projban.rm.desc": "Снять запрет со снаряда по ID",
-  "worldbans.projban.rm.success": "Снаряд с ID {0} был разблокирован."
+  "worldbans.projban.rm.success": "Снаряд с ID {0} был разблокирован.",
+
+  "worldbans.itemban.list.desc": "Список всех запрещённых предметов",
+  "worldbans.itemban.list.empty": "Нет запрещённых предметов.",
+  "worldbans.itemban.list.header": "Запрещённые предметы",
+  
+  "worldbans.itemban.add.desc": "Запретить предмет по ID",
+  "worldbans.itemban.add.success": "Предмет с ID {0} был запрещён.",
+  
+  "worldbans.itemban.rm.desc": "Снять запрет с предмета по ID",
+  "worldbans.itemban.rm.success": "Предмет с ID {0} был разблокирован."
 }

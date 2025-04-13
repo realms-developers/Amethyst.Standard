@@ -32,7 +32,12 @@ public sealed class WorldBans : PluginInstance
             ProjectileID INTEGER PRIMARY KEY
             )");
 
+        SQLiteProvider.ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS ItemBans (
+            ItemID INTEGER PRIMARY KEY
+            )");
+
         NetworkManager.Binding.AddInPacket(PacketTypes.ProjectileNew, OnProjectileNew);
+        NetworkManager.Binding.AddInPacket(PacketTypes.PlayerSlot, OnPlayerSlot);
     }
 
     protected override void Unload()
@@ -44,15 +49,56 @@ public sealed class WorldBans : PluginInstance
         SQLiteProvider = null!;
 
         NetworkManager.Binding.RemoveInPacket(PacketTypes.ProjectileNew, OnProjectileNew);
+        NetworkManager.Binding.RemoveInPacket(PacketTypes.PlayerSlot, OnPlayerSlot);
+    }
+
+    private void OnPlayerSlot(in IncomingPacket packet, PacketHandleResult result)
+    {
+        NetPlayer target = packet.Player;
+
+        if (target.HasPermission("worldbans.bypass.item"))
+        {
+            AmethystLog.Main.Debug(nameof(OnPlayerSlot), "Skipped. Player has bypass permission.");
+
+            return;
+        }
+
+        using BinaryReader reader = packet.GetReader();
+
+        byte pIndex = reader.ReadByte();
+        short slot = reader.ReadInt16();
+        short stack = reader.ReadInt16();
+        byte prefix = reader.ReadByte();
+        short netId = reader.ReadInt16();
+
+        if (!ItemBan.IsBanned(netId))
+        {
+            AmethystLog.Main.Debug(nameof(OnPlayerSlot), $"Skipped. Item {netId} is not banned.");
+
+            return;
+        }
+
+        result.Ignore("worldbans.banned");
+
+        using PacketWriter writer = new();
+
+        byte[] packetBytes = writer
+            .SetType((short)PacketTypes.MassWireOperationPay)
+            .PackInt16(netId)
+            .PackInt16(stack)
+            .PackByte(pIndex)
+            .BuildPacket();
+
+        target.Socket.SendPacket(packetBytes);
     }
 
     private void OnProjectileNew(in IncomingPacket packet, PacketHandleResult result)
     {
         NetPlayer target = packet.Player;
 
-        if (target?.Socket == null || target.HasPermission("worldbans.bypass.proj"))
+        if (target.HasPermission("worldbans.bypass.proj"))
         {
-            AmethystLog.Main.Debug(nameof(OnProjectileNew), "Skipped. Socket is null or player has bypass permissions.");
+            AmethystLog.Main.Debug(Name, "Skipped. Player has bypass permission.");
 
             return;
         }

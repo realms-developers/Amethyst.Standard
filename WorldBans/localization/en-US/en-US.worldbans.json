@@ -7,5 +7,15 @@
   "worldbans.projban.add.success": "Projectile with ID {0} has been banned.",
   
   "worldbans.projban.rm.desc": "Remove a projectile ban by ID",
-  "worldbans.projban.rm.success": "Projectile with ID {0} has been unbanned."
+  "worldbans.projban.rm.success": "Projectile with ID {0} has been unbanned.",
+
+  "worldbans.itemban.list.desc": "List all banned items",
+  "worldbans.itemban.list.empty": "There are no banned items.",
+  "worldbans.itemban.list.header": "Banned Items:",
+  
+  "worldbans.itemban.add.desc": "Ban an item by ID",
+  "worldbans.itemban.add.success": "Item with ID {0} has been banned.",
+  
+  "worldbans.itemban.rm.desc": "Remove an item ban by ID",
+  "worldbans.itemban.rm.success": "Item with ID {0} has been unbanned."
 }
