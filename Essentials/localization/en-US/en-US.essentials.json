@@ -33,5 +33,8 @@
     "essentials.desc.spawn": "Teleports you to spawn",
     "essentials.text.spawn": "Teleported to spawn successfully.",
     "essentials.desc.pos": "Shows yours or a player's position",
-    "essentials.text.pos": "X: {0}, Y: {1}"
+    "essentials.text.pos": "X: {0}, Y: {1}",
+    "essentials.desc.heal": "Heals a player.",
+    "essentials.text.heal": "Healed for {0}!",
+    "essentials.text.heal.other": "{0} healed for {1}!"
 }

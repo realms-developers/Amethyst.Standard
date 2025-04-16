@@ -84,4 +84,31 @@ public static class PlayerCommands
 
         ctx.Sender.ReplySuccess("essentials.text.pos", to.Utils.PosX, to.Utils.PosY);
     }
+
+    [ServerCommand(CommandType.Shared, "heal", "essentials.desc.heal", "essentials.heal")]
+    [CommandsSyntax("[amount]", "[player]")]
+    public static void Heal(CommandInvokeContext ctx, ushort amount = ushort.MaxValue, PlayerReference? toRef = null)
+    {
+        NetPlayer to = toRef == null ? ctx.Sender as NetPlayer ?? throw new InvalidCastException() : toRef.Player;
+
+        bool other = to.Name != ctx.Sender.Name;
+
+        if (other)
+        {
+            if (!ctx.Sender.HasPermission("essentials.heal.others"))
+            {
+                ctx.Sender.ReplyError("commands.noPermission");
+
+                return;
+            }
+
+            ctx.Sender.ReplySuccess("essentials.text.heal.other", to.Name, amount);
+        }
+
+        int heal = Math.Min(amount, to.TPlayer.statLifeMax2 - to.TPlayer.statLife);
+
+        to.Utils.Heal(heal);
+
+        to.ReplySuccess("essentials.text.heal", heal);
+    }
 }

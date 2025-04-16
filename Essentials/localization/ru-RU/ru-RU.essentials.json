@@ -34,5 +34,7 @@
     "essentials.text.spawn": "Успешно телепортирован на спавн.",
     "essentials.desc.pos": "Показывает вашу или чужую позицию.",
     "essentials.text.pos": "X: {0}, Y: {1}",
-    "essentials.text.pos.insufficient": "Недостаточно прав!"
+    "essentials.desc.heal": "Лечит игрока.",
+    "essentials.text.heal": "Исцелен на {0}!",
+    "essentials.text.heal.other": "{0} исцелился за {1}!"
 }
