@@ -4,14 +4,14 @@ namespace Teleportation;
 
 internal sealed class Request
 {
-    private const long _timeoutSecs = 30;
+    internal const long _timeoutSecs = 30;
 
-    private static readonly List<Request> _globalRequests = [];
-    private static readonly Lock _lock = new();
+    internal static readonly List<Request> _globalRequests = [];
+    internal static readonly Lock _lock = new();
 
-    private readonly WeakReference<NetPlayer> _from;
-    private readonly WeakReference<NetPlayer> _to;
-    private readonly CancellationTokenSource _timeoutCts; // Timeout control
+    internal readonly WeakReference<NetPlayer> _from;
+    internal readonly WeakReference<NetPlayer> _to;
+    internal readonly CancellationTokenSource _timeoutCts; // Timeout control
 
     public Request(NetPlayer from, NetPlayer to)
     {
@@ -101,7 +101,7 @@ internal sealed class Request
         }
     }
 
-    private void OnTimeOut()
+    internal void OnTimeOut()
     {
         bool isActiveInGlobalList;
 

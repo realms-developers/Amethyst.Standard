@@ -9,12 +9,12 @@ namespace DiscordBot;
 [AmethystModule(nameof(DiscordBot))]
 public static class DiscordBot
 {
-    private static bool _isInitialized;
+    internal static bool _isInitialized;
 
-    private static readonly Configuration<ClientConfiguration> _clientcfg = new(typeof(ClientConfiguration).FullName!, new());
-    private static readonly Configuration<StatusConfiguration> _statuscfg = new(typeof(StatusConfiguration).FullName!, new());
+    internal static readonly Configuration<ClientConfiguration> _clientcfg = new(typeof(ClientConfiguration).FullName!, new());
+    internal static readonly Configuration<StatusConfiguration> _statuscfg = new(typeof(StatusConfiguration).FullName!, new());
 
-    public static DiscordClient Client { get; private set; } = null!;
+    public static DiscordClient Client { get; internal set; } = null!;
 
     public static bool IsConnected => Client.CurrentApplication != null;
 
