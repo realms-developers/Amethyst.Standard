@@ -16,6 +16,8 @@ public static class DiscordBot
 
     public static DiscordClient Client { get; private set; } = null!;
 
+    public static bool IsConnected => Client.CurrentApplication != null;
+
     [ModuleInitialize]
     public static void Initialize()
     {

@@ -9,7 +9,7 @@ public static partial class Commands
     [ServerCommand(CommandType.Console, "discord-info", "Displays information about the Discord bot.", null)]
     public static void Information(CommandInvokeContext ctx)
     {
-        if (Client.CurrentApplication == null)
+        if (!IsConnected)
         {
             ctx.Sender.ReplyError("Bot isn't initialized!");
 
