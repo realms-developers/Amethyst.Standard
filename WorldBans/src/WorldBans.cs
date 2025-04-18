@@ -20,7 +20,7 @@ public sealed class WorldBans : PluginInstance
         private set;
     } = null!;
 
-    public override string Name => "WorldBans";
+    public override string Name => nameof(WorldBans);
 
     public override Version Version => new(1, 0);
 

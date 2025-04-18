@@ -12,7 +12,7 @@ using Talk.Rendering;
 
 namespace Groups;
 
-[AmethystModule("Groups", null)]
+[AmethystModule(nameof(Groups), null)]
 public static class Groups
 {
     public static MongoModels<GroupModel> GroupModels { get; } = MongoDatabase.Main.Get<GroupModel>();

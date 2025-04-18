@@ -6,7 +6,7 @@ using DSharpPlus.Entities;
 
 namespace DiscordBot;
 
-[AmethystModule("DiscordBot",
+[AmethystModule(nameof(DiscordBot),
     ["deps/Microsoft.Extensions.Logging.Abstractions.dll", "deps/DSharpPlus.dll"])]
 public static class DiscordBot
 {

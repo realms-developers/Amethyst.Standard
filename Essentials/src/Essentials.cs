@@ -11,7 +11,7 @@ public sealed class Essentials : PluginInstance
 {
     public static MongoModels<CharacterModel> CharactersBackup { get; set; } = PlayerManager.Characters.Database.Get<CharacterModel>("CharactersBackupModelCollection");
 
-    public override string Name => "Essentials";
+    public override string Name => nameof(Essentials);
 
     public override Version Version => new(1, 0);
 

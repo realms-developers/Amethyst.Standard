@@ -4,7 +4,7 @@ namespace Teleportation;
 
 public sealed class Teleportation : PluginInstance
 {
-    public override string Name => "Teleportation";
+    public override string Name => nameof(Teleportation);
 
     public override Version Version => new(1, 0);
 
