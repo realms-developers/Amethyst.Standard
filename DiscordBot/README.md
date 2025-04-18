@@ -40,7 +40,7 @@ namespace DiscordTestBot;
 
 public sealed class DiscordTestBot : PluginInstance
 {
-    public override string Name => "DiscordTestBot";
+    public override string Name => nameof(DiscordTestBot);
     public override Version Version => new(1, 0);
 
     protected override void Load()
