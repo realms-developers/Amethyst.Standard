@@ -9,7 +9,7 @@ using Talk.Rendering;
 
 namespace Talk;
 
-[AmethystModule(nameof(Talk), null)]
+[AmethystModule(nameof(Talk))]
 public static class Talk
 {
     public static IChatProvider? CustomProvider { get; set; }
