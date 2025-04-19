@@ -7,6 +7,6 @@ internal struct StatusConfiguration
     public StatusConfiguration() { }
 
     public UserStatus UserStatus = UserStatus.Online;
-    public string StatusText = string.Empty;
     public ActivityType ActivityType = ActivityType.Playing;
+    public string StatusText = string.Empty;
 }
