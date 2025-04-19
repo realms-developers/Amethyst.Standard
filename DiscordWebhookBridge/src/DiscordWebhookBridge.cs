@@ -76,7 +76,7 @@ public sealed class DiscordWebhookBridge : PluginInstance
         string command = reader.ReadString();
         string text = reader.ReadString();
 
-        if (command != "Say")
+        if (command != "Say" || text.StartsWith(Amethyst.Commands.CommandsManager.CommandPrefix))
         {
             return;
         }
