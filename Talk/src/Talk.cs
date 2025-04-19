@@ -39,7 +39,7 @@ public static class Talk
     {
         if (!packet.Player.IsCapable)
         {
-            result.Ignore(Localization.Get("network.playerIsNotCapable", packet.Player.Language));
+            result.Ignore("network.playerIsNotCapable");
             return;
         }
 

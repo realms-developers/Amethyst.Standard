@@ -1,4 +1,3 @@
-using Amethyst;
 using Amethyst.Core;
 using Amethyst.Extensions.Plugins;
 using Amethyst.Network;
@@ -64,13 +63,6 @@ public sealed class DiscordWebhookBridge : PluginInstance
 
     internal static void OnPlayerText(in IncomingModule packet, PacketHandleResult result)
     {
-        if (!packet.Player.IsCapable)
-        {
-            result.Ignore(Localization.Get("network.playerIsNotCapable", packet.Player.Language));
-
-            return;
-        }
-
         BinaryReader reader = packet.GetReader();
 
         string command = reader.ReadString();
