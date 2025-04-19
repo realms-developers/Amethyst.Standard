@@ -81,9 +81,11 @@ public sealed class DiscordWebhookBridge : PluginInstance
             return;
         }
 
+        string content = _webhookcfg.Data.AllowPinging ? text : text.Replace("@", "@\u200B");
+
         DiscordWebhookBuilder builder = new DiscordWebhookBuilder()
             .WithUsername(packet.Player.Name)
-            .WithContent(text);
+            .WithContent(content);
 
         _client.BroadcastMessageAsync(builder).Wait();
     }

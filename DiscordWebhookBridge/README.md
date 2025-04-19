@@ -6,6 +6,7 @@ Amethyst plugin for Discord webhook integration using DSharpPlus. This plugin br
 
 ### Webhook Configuration
 
-| Property       | Type      | Default Value | Description                          |
-|----------------|-----------|---------------|--------------------------------------|
-| `WebhookUri`   | string[]  | `[]`          | Array of Discord webhook URLs        |
+| Property       | Type      | Default Value | Description                                         |
+|----------------|-----------|---------------|-----------------------------------------------------|
+| `WebhookUri`   | string[]  | `[]`          | Array of Discord webhook URLs                       |
+| `AllowPinging` | bool      | `false`       | Determines whether or not to escape `@` on messages |
