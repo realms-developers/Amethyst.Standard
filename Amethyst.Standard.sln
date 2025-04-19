@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBot", "DiscordBot\sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordWebhookBridge", "DiscordWebhookBridge\src\DiscordWebhookBridge.csproj", "{8E9297E7-3506-4C51-8DA7-77891687D40B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBotChatRelay", "DiscordBotChatRelay\src\DiscordBotChatRelay.csproj", "{26D4376C-7DDD-418B-A834-2FC29E1551AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,12 +127,24 @@ Global
 		{8E9297E7-3506-4C51-8DA7-77891687D40B}.Release|x64.Build.0 = Release|Any CPU
 		{8E9297E7-3506-4C51-8DA7-77891687D40B}.Release|x86.ActiveCfg = Release|Any CPU
 		{8E9297E7-3506-4C51-8DA7-77891687D40B}.Release|x86.Build.0 = Release|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Debug|x64.Build.0 = Debug|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Debug|x86.Build.0 = Debug|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|x64.ActiveCfg = Release|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|x64.Build.0 = Release|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6186BBF7-D2A0-36FE-09DD-D60D667C590A} = {8D7B8E0B-7400-9030-8F78-07933281C252}
-		{8E9297E7-3506-4C51-8DA7-77891687D40B} = {6186BBF7-D2A0-36FE-09DD-D60D667C590A}
+		{0294AAC4-C4E4-16FD-D4F0-46C1B9EF7A5A} = {1ACB76E7-A46E-12B5-4569-834CC1329D57}
+		{26D4376C-7DDD-418B-A834-2FC29E1551AE} = {0294AAC4-C4E4-16FD-D4F0-46C1B9EF7A5A}
 	EndGlobalSection
 EndGlobal
