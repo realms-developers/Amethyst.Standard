@@ -6,6 +6,7 @@ Includes:
 - **DiscordWebhookBridge**
 - **Essentials**
 - **Groups**
+- **StatusBar**
 - **Talk**
 - **Teleportation**
 - **TileProtect**

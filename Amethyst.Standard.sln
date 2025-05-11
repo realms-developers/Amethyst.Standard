@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordWebhookBridge", "Dis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBotChatRelay", "DiscordBotChatRelay\src\DiscordBotChatRelay.csproj", "{26D4376C-7DDD-418B-A834-2FC29E1551AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatusBar", "StatusBar\src\StatusBar.csproj", "{3408DACA-3CB3-446B-8C59-42A2080297A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,12 +141,24 @@ Global
 		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|x64.Build.0 = Release|Any CPU
 		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|x86.ActiveCfg = Release|Any CPU
 		{26D4376C-7DDD-418B-A834-2FC29E1551AE}.Release|x86.Build.0 = Release|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Debug|x64.Build.0 = Debug|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Debug|x86.Build.0 = Debug|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Release|x64.ActiveCfg = Release|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Release|x64.Build.0 = Release|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Release|x86.ActiveCfg = Release|Any CPU
+		{3408DACA-3CB3-446B-8C59-42A2080297A2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0294AAC4-C4E4-16FD-D4F0-46C1B9EF7A5A} = {1ACB76E7-A46E-12B5-4569-834CC1329D57}
-		{26D4376C-7DDD-418B-A834-2FC29E1551AE} = {0294AAC4-C4E4-16FD-D4F0-46C1B9EF7A5A}
+		{76F678E8-1F55-1216-C365-70150967C321} = {DCD38B50-62D4-49E0-09CE-D7E2EFAF5637}
+		{3408DACA-3CB3-446B-8C59-42A2080297A2} = {76F678E8-1F55-1216-C365-70150967C321}
 	EndGlobalSection
 EndGlobal
