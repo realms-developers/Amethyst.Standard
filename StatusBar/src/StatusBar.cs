@@ -19,7 +19,7 @@ public static class StatusBar
 
     internal static readonly Configuration<StatusBarConfiguration> _sbCfg = new(typeof(StatusBarConfiguration).FullName!, new());
 
-    internal static Delegate?[] delegates = null!;
+    internal static Func<NetPlayer, string>?[] delegates = null!;
 
     private static Timer? _updateTimer;
 
@@ -37,7 +37,7 @@ public static class StatusBar
 
         _sbCfg.Load();
 
-        delegates = new Delegate[_sbCfg.Data.Plugins.Length];
+        delegates = new Func<NetPlayer, string>?[_sbCfg.Data.Plugins.Length];
 
         PluginLoader.OnPluginLoad += OnPluginLoad;
         PluginLoader.OnPluginUnload += OnPluginUnload;
@@ -169,9 +169,10 @@ public static class StatusBar
         }
 
         var results = new List<string>();
-        foreach (Delegate? del in delegates)
+
+        foreach (Func<NetPlayer, string>? renderDelegate in delegates)
         {
-            if (del is Func<NetPlayer, string> renderDelegate)
+            if (renderDelegate != null)
             {
                 try
                 {
