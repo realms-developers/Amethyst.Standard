@@ -1,5 +1,8 @@
 # WorldBans
 
+> [!WARNING]  
+> This plugin is obsolete and will be merged with the API soon.
+
 Amethyst plugin for banning specific items and projectiles in the world.
 
 ## Item Ban Commands
