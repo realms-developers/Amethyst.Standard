@@ -26,7 +26,7 @@ namespace DisplayPos;
 public sealed class DisplayPos : PluginInstance 
 {
     public override string Name => nameof(DisplayPos);
-    public override Version Version => new Version(1, 0);
+    public override Version Version => new(1, 0);
 
     protected override void Load() { }
     protected override void Unload() { }
