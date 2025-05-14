@@ -6,6 +6,7 @@ Includes:
 - **DiscordWebhookBridge**
 - **Essentials**
 - **Groups**
+- **Handbook**
 - **StatusBar**
 - **Talk**
 - **Teleportation**
