@@ -1,14 +1,9 @@
-Standard Amethyst modules and plugins.
+Standard Amethyst extensions.
 
 Includes:
 - **DiscordBot**
 - **DiscordBotChatRelay**
 - **DiscordWebhookBridge**
-- **Essentials**
-- **Groups**
 - **Handbook**
 - **StatusBar**
-- **Talk**
 - **Teleportation**
-- **TileProtect**
-- **WorldBans**
