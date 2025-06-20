@@ -14,9 +14,9 @@ namespace DiscordBotChatRelay;
 [ExtensionMetadata(nameof(DiscordBotChatRelay), "realms-developers")]
 public sealed class DiscordBotChatRelay : PluginInstance
 {
-    internal static readonly Configuration<RelayConfiguration> _relayCfg = new(typeof(RelayConfiguration).FullName!, new());
-    internal static readonly BotClient _client = new(nameof(DiscordBotChatRelay));
-    internal static readonly NetColor _color = new(255, 255, 255);
+    private static readonly Configuration<RelayConfiguration> _relayCfg = new(typeof(RelayConfiguration).FullName!, new());
+    private static readonly BotClient _client = new(nameof(DiscordBotChatRelay));
+    private static readonly NetColor _color = new(255, 255, 255);
 
     protected override void Load()
     {
@@ -29,7 +29,7 @@ public sealed class DiscordBotChatRelay : PluginInstance
 
     protected override void Unload() => _client.Disconnect();
 
-    internal static Task OnMessageCreated(DiscordClient client, MessageCreateEventArgs args)
+    private static Task OnMessageCreated(DiscordClient client, MessageCreateEventArgs args)
     {
         DiscordMessage msg = args.Message;
         DiscordUser author = msg.Author;

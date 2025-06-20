@@ -8,10 +8,10 @@ namespace DiscordBot;
 
 public class BotClient
 {
-    internal readonly Configuration<ClientConfiguration> _clientcfg;
-    internal readonly Configuration<StatusConfiguration> _statuscfg;
+    private readonly Configuration<ClientConfiguration> _clientcfg;
+    private readonly Configuration<StatusConfiguration> _statuscfg;
 
-    public DiscordClient Client { get; internal set; }
+    public DiscordClient Client { get; private set; }
 
     public bool IsConnected => Client.CurrentApplication != null;
 
