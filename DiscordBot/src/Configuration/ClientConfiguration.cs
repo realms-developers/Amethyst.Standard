@@ -2,10 +2,8 @@
 
 namespace DiscordBot.Configuration;
 
-internal struct ClientConfiguration
+internal class ClientConfiguration
 {
-    public ClientConfiguration() { }
-
     public string Token = string.Empty;
     public TokenType TokenType = TokenType.Bot;
     public DiscordIntents Intents = DiscordIntents.AllUnprivileged;

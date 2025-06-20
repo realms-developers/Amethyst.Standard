@@ -1,8 +1,9 @@
+using Amethyst.Extensions.Base.Metadata;
 using Amethyst.Extensions.Modules;
 
 namespace DiscordBot;
 
-[AmethystModule(nameof(DiscordBot))]
+[ExtensionMetadata(nameof(DiscordBot), "realms-developers")]
 public static class DiscordBot
 {
     public static List<BotClient> GlobalClients { get; } = [];
