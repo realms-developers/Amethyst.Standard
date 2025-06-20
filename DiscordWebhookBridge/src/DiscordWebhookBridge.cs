@@ -3,6 +3,7 @@ using Amethyst.Extensions.Base.Metadata;
 using Amethyst.Extensions.Plugins;
 using Amethyst.Network.Handling;
 using Amethyst.Storages.Config;
+using Amethyst.Systems.Chat;
 using DiscordWebhookBridge.Configuration;
 using DiscordWebhookBridge.Handling;
 using DSharpPlus;
@@ -13,7 +14,7 @@ namespace DiscordWebhookBridge;
 [ExtensionMetadata(nameof(DiscordWebhookBridge), "realms-developers")]
 public sealed class DiscordWebhookBridge : PluginInstance
 {
-    private static readonly DiscordChatHandler _handler = new();
+    private static readonly DiscordChatOutput _chatOutput = new();
 
     private static DiscordWebhook[] _registered = null!;
 
@@ -43,7 +44,7 @@ public sealed class DiscordWebhookBridge : PluginInstance
             AmethystLog.Main.Info(nameof(DiscordWebhookBridge), $"Loaded webhook {i}.");
         }
 
-        HandlerManager.RegisterHandler(_handler);
+        ServerChat.OutputRegistry.Add(_chatOutput);
     }
 
     protected override void Unload()
@@ -58,6 +59,6 @@ public sealed class DiscordWebhookBridge : PluginInstance
             _client.RemoveWebhook(webhook.Id);
         }
 
-        HandlerManager.UnregisterHandler(_handler);
+        ServerChat.OutputRegistry.Remove(_chatOutput);
     }
 }
