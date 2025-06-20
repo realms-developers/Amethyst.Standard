@@ -1,9 +1,7 @@
 ﻿namespace DiscordWebhookBridge.Configuration;
 
-internal struct WebhookConfiguration
+internal class WebhookConfiguration
 {
-    public WebhookConfiguration() { }
-
     public string[] WebhookUri = [];
     public bool AllowPinging = false;
 }

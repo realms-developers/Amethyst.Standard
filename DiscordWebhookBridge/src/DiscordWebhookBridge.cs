@@ -1,25 +1,25 @@
-using Amethyst.Core;
+using Amethyst;
+using Amethyst.Extensions.Base.Metadata;
 using Amethyst.Extensions.Plugins;
-using Amethyst.Network;
-using Amethyst.Network.Managing;
-using Amethyst.Network.Packets;
+using Amethyst.Network.Handling;
 using Amethyst.Storages.Config;
 using DiscordWebhookBridge.Configuration;
+using DiscordWebhookBridge.Handling;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
 namespace DiscordWebhookBridge;
 
+[ExtensionMetadata(nameof(DiscordWebhookBridge), "realms-developers")]
 public sealed class DiscordWebhookBridge : PluginInstance
 {
+    private static readonly DiscordChatHandler _handler = new();
+
+    private static DiscordWebhook[] _registered = null!;
+
     internal static readonly Configuration<WebhookConfiguration> _webhookcfg = new(typeof(WebhookConfiguration).FullName!, new());
 
-    internal static DiscordWebhook[] _registered = null!;
     internal static DiscordWebhookClient _client = new();
-
-    public override string Name => nameof(DiscordWebhookBridge);
-
-    public override Version Version => new(1, 0);
 
     protected override void Load()
     {
@@ -29,7 +29,7 @@ public sealed class DiscordWebhookBridge : PluginInstance
 
         if (webhookUri.Length == 0)
         {
-            AmethystLog.Main.Error(Name, "WebhookUri is empty. Loading canceled.");
+            AmethystLog.Main.Error(nameof(DiscordWebhook), "WebhookUri is empty. Loading canceled.");
 
             return;
         }
@@ -40,10 +40,10 @@ public sealed class DiscordWebhookBridge : PluginInstance
         {
             _registered[i] = _client.AddWebhookAsync(new(webhookUri[i])).Result;
 
-            AmethystLog.Main.Info(Name, $"Loaded webhook {i}.");
+            AmethystLog.Main.Info(nameof(DiscordWebhookBridge), $"Loaded webhook {i}.");
         }
 
-        NetworkManager.Binding.AddInModule(ModuleTypes.NetText, OnPlayerText);
+        HandlerManager.RegisterHandler(_handler);
     }
 
     protected override void Unload()
@@ -58,27 +58,6 @@ public sealed class DiscordWebhookBridge : PluginInstance
             _client.RemoveWebhook(webhook.Id);
         }
 
-        NetworkManager.Binding.RemoveInModule(ModuleTypes.NetText, OnPlayerText);
-    }
-
-    internal static void OnPlayerText(in IncomingModule packet, PacketHandleResult result)
-    {
-        BinaryReader reader = packet.GetReader();
-
-        string command = reader.ReadString();
-        string text = reader.ReadString();
-
-        if (command != "Say" || text.StartsWith(Amethyst.Commands.CommandsManager.CommandPrefix))
-        {
-            return;
-        }
-
-        string content = _webhookcfg.Data.AllowPinging ? text : text.Replace("@", "@\u200B");
-
-        DiscordWebhookBuilder builder = new DiscordWebhookBuilder()
-            .WithUsername(packet.Player.Name)
-            .WithContent(content);
-
-        _client.BroadcastMessageAsync(builder).Wait();
+        HandlerManager.UnregisterHandler(_handler);
     }
 }
