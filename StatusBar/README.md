@@ -18,19 +18,18 @@ Amethyst module for displaying customizable status information in the player's s
 Plugins can contribute to the status bar by implementing a static `RenderStatusText` method. Here's an example plugin:
 
 ```csharp
+using Amethyst.Extensions.Base.Metadata;
 using Amethyst.Extensions.Plugins;
-using Amethyst.Players;
+using Amethyst.Server.Entities.Players;
 
 namespace DisplayPos;
 
-public sealed class DisplayPos : PluginInstance 
+[ExtensionMetadata(nameof(DisplayPos))]
+public sealed class DisplayPos : PluginInstance
 {
-    public override string Name => nameof(DisplayPos);
-    public override Version Version => new(1, 0);
-
     protected override void Load() { }
     protected override void Unload() { }
 
-    public static string RenderStatusText(NetPlayer from) => $"Position: X={from.Utils.PosX}, Y={from.Utils.PosY}";
+    public static string RenderStatusText(PlayerEntity from) => $"Position: X={from.Position.X}, Y={from.Position.Y}";
 }
 ```

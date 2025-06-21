@@ -7,6 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Amethyst.Server" Version="9.*" />
+    <PackageReference Include="Amethyst.Server" Version="10.2.4" />
   </ItemGroup>
 </Project>

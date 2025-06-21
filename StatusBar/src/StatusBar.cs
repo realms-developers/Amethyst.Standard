@@ -2,24 +2,29 @@ using System.Reflection;
 using System.Text;
 using System.Timers;
 using Amethyst;
-using Amethyst.Core;
+using Amethyst.Extensions.Base.Metadata;
+using Amethyst.Extensions.Base.Result;
 using Amethyst.Extensions.Modules;
-using Amethyst.Extensions.Plugins;
-using Amethyst.Players;
+using Amethyst.Hooks;
+using Amethyst.Hooks.Args.Extensions;
+using Amethyst.Hooks.Base;
+using Amethyst.Kernel;
+using Amethyst.Server.Entities;
+using Amethyst.Server.Entities.Players;
 using Amethyst.Storages.Config;
 using StatusBar.Configuration;
 using Timer = System.Timers.Timer;
 
 namespace StatusBar;
 
-[AmethystModule(nameof(StatusBar))]
+[ExtensionMetadata(nameof(StatusBar), "realms-developers")]
 public static class StatusBar
 {
-    internal const string _methodName = "RenderStatusText";
+    private const string _methodName = "RenderStatusText";
 
-    internal static readonly Configuration<StatusBarConfiguration> _sbCfg = new(typeof(StatusBarConfiguration).FullName!, new());
+    private static readonly Configuration<StatusBarConfiguration> _sbCfg = new(typeof(StatusBarConfiguration).FullName!, new());
 
-    internal static Func<NetPlayer, string>?[] delegates = null!;
+    private static Func<PlayerEntity, string>?[] delegates = null!;
 
     private static Timer? _updateTimer;
 
@@ -37,10 +42,10 @@ public static class StatusBar
 
         _sbCfg.Load();
 
-        delegates = new Func<NetPlayer, string>?[_sbCfg.Data.Plugins.Length];
+        delegates = new Func<PlayerEntity, string>?[_sbCfg.Data.Plugins.Length];
 
-        PluginLoader.OnPluginLoad += OnPluginLoad;
-        PluginLoader.OnPluginUnload += OnPluginUnload;
+        HookRegistry.GetHook<PluginInitializeArgs>().Register(OnPluginInitialize);
+        HookRegistry.GetHook<PluginDeinitializeArgs>().Register(OnPluginDeinitialize);
 
         _updateTimer = new Timer(_sbCfg.Data.UpdateIntervalMs)
         {
@@ -51,19 +56,21 @@ public static class StatusBar
         _updateTimer.Elapsed += Update;
     }
 
-    private static void OnPluginLoad(PluginContainer container)
+    private static void OnPluginInitialize(in PluginInitializeArgs args, HookResult<PluginInitializeArgs> result)
     {
-        if (container.PluginInstance == null)
+        if (args.Result.State != ExtensionResult.SuccessOperation)
         {
             return;
         }
 
+        string pluginName = args.Instance.Root.Metadata.Name;
+
         // Find the index of this plugin in the configuration
-        int pluginIndex = Array.IndexOf(_sbCfg.Data.Plugins, container.PluginInstance.Name);
+        int pluginIndex = Array.IndexOf(_sbCfg.Data.Plugins, pluginName);
 
         if (pluginIndex == -1)
         {
-            AmethystLog.Main.Debug(nameof(OnPluginLoad), $"{container.PluginInstance.Name} not found in status bar configuration.");
+            AmethystLog.Main.Debug(nameof(OnPluginInitialize), $"{pluginName} not found in status bar configuration.");
 
             return;
         }
@@ -71,16 +78,16 @@ public static class StatusBar
         try
         {
             // Get the type containing the Render method
-            Type? pluginType = container.Assembly.GetTypes()
+            Type? pluginType = args.Instance.Root.Assembly.GetTypes()
                 .FirstOrDefault(t => t.GetMethod(_methodName,
                     BindingFlags.Public | BindingFlags.Static,
                     null,
-                    [typeof(NetPlayer)],
+                    [typeof(PlayerEntity)],
                     null) != null);
 
             if (pluginType == null)
             {
-                AmethystLog.Main.Debug(nameof(OnPluginLoad), $"No render type for plugin {container.PluginInstance.Name} found.");
+                AmethystLog.Main.Debug(nameof(OnPluginInitialize), $"No render type for plugin {pluginName} found.");
 
                 return;
             }
@@ -90,19 +97,19 @@ public static class StatusBar
                 _methodName,
                 BindingFlags.Public | BindingFlags.Static,
                 null,
-                [typeof(NetPlayer)],
+                [typeof(PlayerEntity)],
                 null);
 
             if (renderMethod == null)
             {
-                AmethystLog.Main.Debug(nameof(OnPluginLoad), $"No render method for plugin {container.PluginInstance.Name} found.");
+                AmethystLog.Main.Debug(nameof(OnPluginInitialize), $"No render method for plugin {pluginName} found.");
 
                 return;
             }
 
             // Create the delegate
-            var renderDelegate = (Func<NetPlayer, string>)Delegate.CreateDelegate(
-                typeof(Func<NetPlayer, string>),
+            var renderDelegate = (Func<PlayerEntity, string>)Delegate.CreateDelegate(
+                typeof(Func<PlayerEntity, string>),
                 renderMethod);
 
             // Store the delegate in the array
@@ -111,19 +118,21 @@ public static class StatusBar
         catch (Exception ex)
         {
             // Log error
-            AmethystLog.Main.Error(nameof(OnPluginLoad), $"Failed to create delegate for plugin {container.PluginInstance.Name}: {ex.Message}");
+            AmethystLog.Main.Error(nameof(OnPluginInitialize), $"Failed to create delegate for plugin {pluginName}: {ex.Message}");
         }
     }
 
-    private static void OnPluginUnload(PluginContainer container)
+    private static void OnPluginDeinitialize(in PluginDeinitializeArgs args, HookResult<PluginDeinitializeArgs> result)
     {
-        if (container.PluginInstance == null)
+        if (args.Result.State != ExtensionResult.SuccessOperation)
         {
             return;
         }
 
+        string pluginName = args.Instance.Root.Metadata.Name;
+
         // Find the index of this plugin in the configuration
-        int pluginIndex = Array.IndexOf(_sbCfg.Data.Plugins, container.PluginInstance.Name);
+        int pluginIndex = Array.IndexOf(_sbCfg.Data.Plugins, pluginName);
 
         if (pluginIndex == -1 || pluginIndex >= delegates.Length)
         {
@@ -136,41 +145,43 @@ public static class StatusBar
             // Clear the delegate reference
             delegates[pluginIndex] = null;
 
-            AmethystLog.Main.Debug(nameof(OnPluginUnload),
-                $"Cleared delegate for plugin: {container.PluginInstance.Name}");
+            AmethystLog.Main.Debug(nameof(OnPluginDeinitialize),
+                $"Cleared delegate for plugin: {pluginName}");
         }
         catch (Exception ex)
         {
-            AmethystLog.Main.Error(nameof(OnPluginUnload),
-                $"Failed to unload plugin {container.PluginInstance.Name}: {ex.Message}");
+            AmethystLog.Main.Error(nameof(OnPluginDeinitialize),
+                $"Failed to unload plugin {pluginName}: {ex.Message}");
         }
     }
 
     private static void Update(object? source, ElapsedEventArgs e)
     {
-        foreach (NetPlayer plr in PlayerManager.Tracker)
+        foreach (PlayerEntity plr in EntityTrackers.Players)
         {
             string statusText = Render(plr);
 
-            plr.Utils.SendStatusText(statusText, _sbCfg.Data.Padding);
+            plr.SendStatusText(statusText, _sbCfg.Data.Padding);
         }
     }
 
-    internal static string Render(NetPlayer from)
+    internal static string Render(PlayerEntity from)
     {
         StatusBarConfiguration config = _sbCfg.Data;
 
         var builder = new StringBuilder();
 
+        string lang = from.User?.Messages.Language ?? AmethystSession.Profile.DefaultLanguage;
+
         // Add header if not empty
         if (!string.IsNullOrEmpty(config.Header))
         {
-            builder.Append(Localization.Get(config.Header, from.Language));
+            builder.Append(Localization.Get(config.Header, lang));
         }
 
         var results = new List<string>();
 
-        foreach (Func<NetPlayer, string>? renderDelegate in delegates)
+        foreach (Func<PlayerEntity, string>? renderDelegate in delegates)
         {
             if (renderDelegate != null)
             {
@@ -199,7 +210,7 @@ public static class StatusBar
         // Add footer if not empty
         if (!string.IsNullOrEmpty(config.Footer))
         {
-            builder.Append(Localization.Get(config.Footer, from.Language));
+            builder.Append(Localization.Get(config.Footer, lang));
         }
 
         return builder.ToString();

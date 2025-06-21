@@ -1,9 +1,7 @@
 ﻿namespace StatusBar.Configuration;
 
-internal struct StatusBarConfiguration
+internal class StatusBarConfiguration
 {
-    public StatusBarConfiguration() { }
-
     public string Header = string.Empty;
     public string Footer = string.Empty;
     public string Separator = "\n";
