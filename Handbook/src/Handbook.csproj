@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Amethyst.Server" Version="9.*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="9.0.5" />
+    <PackageReference Include="Amethyst.Server" Version="10.2.4" />
   </ItemGroup>
 </Project>

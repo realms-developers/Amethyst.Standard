@@ -1,23 +1,22 @@
 # Handbook
+Amethyst plugin for creating and displaying customizable help documents in pages.
 
-Amethyst plugin for creating and displaying customizable help documents.
+## Commands
+| Command | Description | Permission |
+|----------------------------------------------|----------------------------------------------|---------------------------|
+| `handbook edit <document> <content>` | Edit or create a handbook document | `handbook.edit` |
+| `handbook remove <document>`, `handbook rm <document>` | Remove a handbook document | `handbook.remove` |
+| `handbook list [page]` | List all available handbook documents | `handbook.see` |
+| `handbook see <document> [page]` | View the contents of a handbook document | `handbook.see` |
 
-## Usage
+## Permissions
+| Permission | Description |
+|------------------------|--------------------------------------------------|
+| `handbook.create` | Allows creating new handbook documents (required for editing non-existent documents) |
 
-1. The plugin automatically creates a `Handbook` directory in your profile's path
-2. A sample `handbook.ini` file is generated on first run
-3. Each INI file becomes a command (filename = command name)
-
-### Handbook File Format
-```ini
-; Example handbook.ini
-[meta]
-description = Displays a welcome message ; Command description. Supports localization
-permission = handbook.admin              ; Optional permission requirement
-
-[en-US]                                  ; Language code
-content = Welcome!                       ; Displayed content
-
-[ru-RU]
-content = приветствовать!
-```
+## Configuration
+### Handbook Configuration
+| Property | Type | Default Value | Description |
+|----------------|-----------|---------------|-----------------------------------------------------|
+| `MaxLines` | int | `5` | Maximum number of lines to display per page |
+| `NewLine` | string | `"\n"` | Line separator used when splitting document content into pages |

@@ -1,0 +1,9 @@
+{
+    "handbook.edit.desc": "Edit or create a handbook document",
+    "handbook.edit.success": "Successfully edited document '{0}'",
+    "handbook.remove.desc": "Remove a handbook document",
+    "handbook.remove.success": "Successfully removed document '{0}'",
+    "handbook.list.desc": "List all available handbook documents",
+    "handbook.list.header": "Available Documents:",
+    "handbook.see.desc": "View the contents of a handbook document"
+}
