@@ -6,4 +6,3 @@ Includes:
 - **DiscordWebhookBridge**
 - **Handbook**
 - **StatusBar**
-- **Teleportation**
