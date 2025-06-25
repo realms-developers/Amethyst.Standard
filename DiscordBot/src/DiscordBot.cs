@@ -6,9 +6,17 @@ namespace DiscordBot;
 [ExtensionMetadata(nameof(DiscordBot), "realms-developers")]
 public static class DiscordBot
 {
-    public static BotClient MainClient { get; } = new BotClient("Main");
+    static DiscordBot()
+    {
+        GlobalClients = [];
 
-    public static List<BotClient> GlobalClients { get; } = [];
+        MainClient = new("Main");
+        MainClient.Connect();
+    }
+
+    public static BotClient MainClient { get; }
+
+    public static List<BotClient> GlobalClients { get; }
 
     [ModuleInitialize]
     public static void Initialize() { }
