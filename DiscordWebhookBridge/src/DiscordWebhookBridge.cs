@@ -1,7 +1,6 @@
 using Amethyst;
 using Amethyst.Extensions.Base.Metadata;
 using Amethyst.Extensions.Plugins;
-using Amethyst.Network.Handling;
 using Amethyst.Storages.Config;
 using Amethyst.Systems.Chat;
 using DiscordWebhookBridge.Configuration;
@@ -30,7 +29,7 @@ public sealed class DiscordWebhookBridge : PluginInstance
 
         if (webhookUri.Length == 0)
         {
-            AmethystLog.Main.Error(nameof(DiscordWebhook), "WebhookUri is empty. Loading canceled.");
+            AmethystLog.Main.Error(nameof(DiscordWebhookBridge), "WebhookUri is empty. Loading canceled.");
 
             return;
         }
