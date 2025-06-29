@@ -1,8 +1,10 @@
 Standard Amethyst extensions.
 
 Includes:
-- **DiscordBot**
-- **DiscordBotChatRelay**
-- **DiscordWebhookBridge**
-- **Handbook**
-- **StatusBar**
+- **[Dimensions](Dimensions)**
+- **[DiscordBot](DiscordBot)**
+- **[DiscordBotChatRelay](DiscordBotChatRelay)**
+- **[DiscordWebhookBridge](DiscordWebhookBridge)**
+- **[Handbook](Handbook)**
+- **[StatusBar](StatusBar)**
+- **[WorldRegeneration](WorldRegeneration)**
