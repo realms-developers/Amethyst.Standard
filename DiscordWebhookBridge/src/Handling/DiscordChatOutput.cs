@@ -24,7 +24,7 @@ public sealed class DiscordChatOutput : IChatMessageOutput
 
         // Format content
         content = string.Format(_webhookcfg.Data.ContentFormat, content,
-                message.Entity.Name, message.Entity.UUID, message.Entity.IP, message.Entity.Index);
+                message.Entity.Name, message.Entity.IP, message.Entity.Index);
 
         // Build and send webhook
         DiscordWebhookBuilder builder = new DiscordWebhookBuilder()
