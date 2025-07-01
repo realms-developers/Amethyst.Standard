@@ -17,8 +17,8 @@ public class BotClient
 
     public BotClient(string name)
     {
-        _clientcfg = new($"{typeof(ClientConfiguration).FullName}.{name}", new());
-        _statuscfg = new($"{typeof(StatusConfiguration).FullName}.{name}", new());
+        _clientcfg = new($"ClientConfiguration.{name}", new());
+        _statuscfg = new($"StatusConfiguration.{name}", new());
 
         _clientcfg.Load();
         _statuscfg.Load();

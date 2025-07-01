@@ -17,7 +17,7 @@ public sealed class DiscordWebhookBridge : PluginInstance
 
     private static DiscordWebhook[] _registered = null!;
 
-    internal static readonly Configuration<WebhookConfiguration> _webhookcfg = new(typeof(WebhookConfiguration).FullName!, new());
+    internal static readonly Configuration<WebhookConfiguration> _webhookcfg = new(nameof(WebhookConfiguration), new());
 
     internal static DiscordWebhookClient _client = new();
 

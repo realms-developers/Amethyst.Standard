@@ -22,7 +22,7 @@ public static class StatusBar
 {
     private const string _methodName = "RenderStatusText";
 
-    private static readonly Configuration<StatusBarConfiguration> _sbCfg = new(typeof(StatusBarConfiguration).FullName!, new());
+    private static readonly Configuration<StatusBarConfiguration> _sbCfg = new(nameof(StatusBarConfiguration), new());
 
     private static Func<PlayerEntity, string>?[] delegates = null!;
 
