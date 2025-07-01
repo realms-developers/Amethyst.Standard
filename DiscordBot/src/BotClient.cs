@@ -1,4 +1,5 @@
-﻿using Amethyst.Storages.Config;
+﻿using Amethyst.Kernel;
+using Amethyst.Storages.Config;
 using DiscordBot.Configuration;
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -23,13 +24,18 @@ public class BotClient
         _clientcfg.Load();
         _statuscfg.Load();
 
+        Microsoft.Extensions.Logging.LogLevel level = AmethystSession.Profile.DebugMode ?
+            Microsoft.Extensions.Logging.LogLevel.Information :
+            Microsoft.Extensions.Logging.LogLevel.None;
+
         Client = new(new()
         {
             Token = _clientcfg.Data.Token,
             TokenType = _clientcfg.Data.TokenType,
             Intents = _clientcfg.Data.Intents,
             ShardId = _clientcfg.Data.ShardId,
-            ShardCount = _clientcfg.Data.ShardCount
+            ShardCount = _clientcfg.Data.ShardCount,
+            MinimumLogLevel = level
         });
 
         GlobalClients.Add(this);
