@@ -17,7 +17,7 @@ public static class RegenUtils
             .Replace("%PROFILE%", AmethystSession.Profile.Name);
 
     public static string GetDefaultWorldPath()
-        => RegenConfiguration.Instance.AutoRegenerateRootPath
+        => RegenConfiguration.Instance.AutoRegenerateFileName
             .Replace("%ROOT_PATH%", RootPath())
             .Replace("%WORLD_ID%", Main.worldID.ToString());
 

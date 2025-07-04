@@ -1,3 +1,7 @@
 {
-    "wregen.status": "World will be regenerated in {1}:{2} (h:m)."
+    "wregen.status": "World will be regenerated in:\n  {0}h.  {1}m.",
+    "wregen.desc.saveworld": "Save the current world.",
+    "wregen.desc.loadworld": "Load the saved world.",
+    "wregen.reply.saved": "World successfully saved: {0}.",
+    "wregen.reply.loaded": "World successfully loaded: {0}."
 }
