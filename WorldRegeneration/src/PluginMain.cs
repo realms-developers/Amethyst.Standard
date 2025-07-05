@@ -13,6 +13,7 @@ namespace WorldRegeneration;
 public sealed class PluginMain : PluginInstance
 {
     internal static DateTime NextRegenerationTime { get; set; } = DateTime.UtcNow.AddMinutes(RegenConfiguration.Instance.AutoRegenerateMinutes);
+    internal static bool PendingWorldLoad { get; set; } = false;
 
     protected override void Load()
     {
@@ -22,17 +23,28 @@ public sealed class PluginMain : PluginInstance
 
     private void OnSecondTick(in SecondTickArgs args, HookResult<SecondTickArgs> result)
     {
-        if (RegenConfiguration.Instance.AutoRegenerate && DateTime.UtcNow >= NextRegenerationTime)
+        if (RegenConfiguration.Instance.AutoRegenerate && DateTime.UtcNow >= NextRegenerationTime && !PendingWorldLoad)
         {
-            if (RegenUtils.LoadWorld(RegenUtils.GetDefaultWorldPath()))
+            PendingWorldLoad = true;
+            NextRegenerationTime = DateTime.UtcNow.AddMinutes(RegenConfiguration.Instance.AutoRegenerateMinutes);
+
+            try
             {
-                NextRegenerationTime = DateTime.UtcNow.AddMinutes(RegenConfiguration.Instance.AutoRegenerateMinutes);
-                AmethystLog.Main.Info("WorldRegeneration", "World regeneration completed successfully.");
+                if (RegenUtils.LoadWorld(RegenUtils.GetDefaultWorldPath()))
+                {
+                    AmethystLog.Main.Info("WorldRegeneration", "World regeneration completed successfully.");
+                }
+                else
+                {
+                    AmethystLog.Main.Error("WorldRegeneration", "Failed to load the world for regeneration.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                AmethystLog.Main.Error("WorldRegeneration", "Failed to load the world for regeneration.");
+                AmethystLog.Main.Error("WorldRegeneration", $"World regeneration failed: {ex}");
             }
+
+            PendingWorldLoad = false;
         }
     }
 
