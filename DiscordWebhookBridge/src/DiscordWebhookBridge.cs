@@ -27,6 +27,13 @@ public sealed class DiscordWebhookBridge : PluginInstance
 
         string[] webhookUri = _webhookcfg.Data.WebhookUri;
 
+        if (_webhookcfg.Data.PermissionedAvatars.Count == 0)
+        {
+            _webhookcfg.Data.PermissionedAvatars.Add("hasrole<admin>", "");
+            _webhookcfg.Data.PermissionedAvatars.Add("hasrole<moderator>", "");
+            _webhookcfg.Data.PermissionedAvatars.Add("example.permission", "");
+        }
+
         if (webhookUri.Length == 0)
         {
             AmethystLog.Main.Error(nameof(DiscordWebhookBridge), "WebhookUri is empty. Loading canceled.");

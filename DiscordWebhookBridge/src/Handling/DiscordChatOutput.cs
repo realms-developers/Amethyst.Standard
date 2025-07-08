@@ -1,3 +1,4 @@
+using Amethyst.Server.Entities.Players;
 using Amethyst.Systems.Chat.Base;
 using Amethyst.Systems.Chat.Base.Models;
 using Amethyst.Text;
@@ -11,6 +12,51 @@ public sealed class DiscordChatOutput : IChatMessageOutput
     public string Name => typeof(DiscordChatOutput).FullName!;
 
     public void OutputMessage(MessageRenderResult message)
+    {
+        string username = Render(message, _webhookcfg.Data.UserFormat);
+        string output = Render(message, _webhookcfg.Data.ContentFormat);
+
+        if (!_webhookcfg.Data.AllowPinging)
+        {
+            output = output.Replace("@", "@\u200B");
+        }
+
+        DiscordWebhookBuilder builder = new DiscordWebhookBuilder()
+            .WithUsername(username.RemoveColorTags())
+            .WithContent(output.RemoveColorTags());
+
+        string avatarUrl = GetAvatarUrl(message.Entity);
+
+        if (!string.IsNullOrEmpty(avatarUrl))
+        {
+            builder.WithAvatarUrl(avatarUrl);
+        }
+
+        _client.BroadcastMessageAsync(builder).Wait();
+    }
+
+    private string GetAvatarUrl(PlayerEntity player)
+    {
+        if (player == null || player.User == null || player.User.Messages == null)
+        {
+            return string.Empty;
+        }
+
+        string? avatarUrl = null;
+
+        foreach (var permission in _webhookcfg.Data.PermissionedAvatars)
+        {
+            if (player.User?.Permissions.HasPermission(permission.Key) == Amethyst.Systems.Users.Base.Permissions.PermissionAccess.HasPermission)
+            {
+                avatarUrl = permission.Value;
+                break;
+            }
+        }
+
+        return avatarUrl ?? _webhookcfg.Data.DefaultAvatarUrl;
+    }
+
+    private string Render(MessageRenderResult message, string format)
     {
         bool GetValueOrDefault(string key, out string? outValue)
         {
@@ -27,8 +73,7 @@ public sealed class DiscordChatOutput : IChatMessageOutput
             return false;
         }
 
-        List<string> configParts = ParseConfig();
-        string output = DiscordWebhookBridge._webhookcfg.Data.ContentFormat;
+        List<string> configParts = ParseConfig(format);
 
         foreach (var part in configParts)
         {
@@ -45,7 +90,7 @@ public sealed class DiscordChatOutput : IChatMessageOutput
                 {
                     if (GetValueOrDefault(subpart, out var value1))
                     {
-                        output = output.Replace(part, value1);
+                        format = format.Replace(part, value1);
 
                         canContinue = true;
                         break;
@@ -57,62 +102,46 @@ public sealed class DiscordChatOutput : IChatMessageOutput
             }
 
 
-            output = GetValueOrDefault(key, out var value2) ?
-                output.Replace(part, value2) :
-                output.Replace(part, string.Empty);
+            format = GetValueOrDefault(key, out var value2) ?
+                format.Replace(part, value2) :
+                format.Replace(part, string.Empty);
         }
 
-        output = output.Trim('{').Trim('}');
+        format = format.Trim('{').Trim('}');
 
-        if (!_webhookcfg.Data.AllowPinging)
-        {
-            output = output.Replace("@", "@\u200B");
-        }
-
-        DiscordWebhookBuilder builder = new DiscordWebhookBuilder()
-            .WithUsername(message.Entity.Name)
-            .WithContent(output.RemoveColorTags());
-
-        if (_webhookcfg.Data.AvatarUrl != string.Empty)
-        {
-            builder.WithAvatarUrl(_webhookcfg.Data.AvatarUrl);
-        }
-
-        _client.BroadcastMessageAsync(builder).Wait();
+        return format;
     }
 
-
-    private List<string> ParseConfig()
+    private List<string> ParseConfig(string format)
     {
-        var config = DiscordWebhookBridge._webhookcfg.Data.ContentFormat;
         var parts = new List<string>();
         int startIndex = 0;
 
-        while (startIndex < config.Length)
+        while (startIndex < format.Length)
         {
-            int openBraceIndex = config.IndexOf('{', startIndex);
+            int openBraceIndex = format.IndexOf('{', startIndex);
             if (openBraceIndex == -1)
             {
-                parts.Add(config.Substring(startIndex));
+                parts.Add(format.Substring(startIndex));
                 break;
             }
 
             if (openBraceIndex > startIndex)
             {
-                parts.Add(config.Substring(startIndex, openBraceIndex - startIndex));
+                parts.Add(format.Substring(startIndex, openBraceIndex - startIndex));
             }
 
-            int closeBraceIndex = config.IndexOf('}', openBraceIndex);
+            int closeBraceIndex = format.IndexOf('}', openBraceIndex);
             if (closeBraceIndex == -1)
             {
-                parts.Add(config.Substring(openBraceIndex));
+                parts.Add(format.Substring(openBraceIndex));
                 break;
             }
 
-            parts.Add(config.Substring(openBraceIndex, closeBraceIndex - openBraceIndex + 1));
+            parts.Add(format.Substring(openBraceIndex, closeBraceIndex - openBraceIndex + 1));
             startIndex = closeBraceIndex + 1;
         }
 
-        return parts;   
+        return parts;
     }
 }

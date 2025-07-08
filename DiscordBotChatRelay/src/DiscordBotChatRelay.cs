@@ -1,3 +1,4 @@
+using Amethyst;
 using Amethyst.Extensions.Base.Metadata;
 using Amethyst.Extensions.Plugins;
 using Amethyst.Network.Structures;
@@ -14,7 +15,7 @@ namespace DiscordBotChatRelay;
 [ExtensionMetadata(nameof(DiscordBotChatRelay), "realms-developers")]
 public sealed class DiscordBotChatRelay : PluginInstance
 {
-    private static readonly Configuration<RelayConfiguration> _relayCfg = new(typeof(RelayConfiguration).FullName!, new());
+    private static readonly Configuration<RelayConfiguration> _relayCfg = new(nameof(RelayConfiguration), new());
     private static readonly BotClient _client = new(nameof(DiscordBotChatRelay));
     private static readonly NetColor _color = new(255, 255, 255);
 
@@ -36,6 +37,7 @@ public sealed class DiscordBotChatRelay : PluginInstance
 
         if (_relayCfg.Data.ChannelIds.Any(i => msg.ChannelId == i) && !author.IsBot)
         {
+            AmethystLog.System.Info("DiscordChatRelay", $"$!b#{args.Channel.Name} $!r$b@$!d{author.Username}$!r: $!d{msg.Content}");
             PlayerUtils.BroadcastText(_relayCfg.Data.Format, _color,
                 msg.Content, author.Username, author.Id, args.Channel.Name, msg.ChannelId);
         }
